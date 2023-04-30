@@ -1,12 +1,12 @@
 import React from 'react';
-import DataAnalysis from './components/DataAnalysis';
+import AntdWebsite from './components/AntdWebsite';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <DataAnalysis />
-    </div>
+      <AntdWebsite />
+    </div> 
   );
 }
 
