@@ -1,10 +1,11 @@
 import React from 'react';
 import { Layout, Typography, Carousel } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-const AntdWebsite = () => {
+const HomePage = () => {
     return (
         <Layout>
             <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }}>
@@ -13,9 +14,9 @@ const AntdWebsite = () => {
             <Content style={{ padding: '20px', marginBottom: '20px', textAlign: 'center' }}>
                 <Title level={2} style={{ marginBottom: '20px' }}>Group 48 Scenario Presentation</Title>
 
-                <Carousel style={{ height: '500px' }} autoplay>
+                <Carousel style={{ height: '100px' }} autoplay>
                     <div>
-                        <h1>Scenario 1</h1>
+                        <Link to="/scenario1"><h1>Scenario 1</h1></Link>
                     </div>
                     <div>
                         <h1>Scenario 2</h1>
@@ -34,4 +35,4 @@ const AntdWebsite = () => {
     );
 };
 
-export default AntdWebsite;
+export default HomePage;
