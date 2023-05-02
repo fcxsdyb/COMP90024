@@ -8,9 +8,8 @@ const { Title } = Typography;
 const HomePage = () => {
     return (
         <Layout>
-            <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }}>
-            </Header>
-
+            <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }} />
+            
             <Content style={{ padding: '20px', marginBottom: '20px', textAlign: 'center' }}>
                 <Title level={2} style={{ marginBottom: '20px' }}>Group 48 Scenario Presentation</Title>
 
