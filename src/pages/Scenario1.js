@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import Map from '../components/Map';
 
 const { Header, Footer } = Layout;
 
 const DataAnalysis = () => {
+
+    const [mapData, setMapData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/cancer_map');
+            const jsonData = await response.json();
+            setMapData(jsonData);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+
     const data = [
         { name: 'A', value: 400 },
         { name: 'B', value: 300 },
@@ -13,7 +33,7 @@ const DataAnalysis = () => {
         { name: 'D', value: 100 },
     ];
 
-    const position = [43.43, -0.03];
+    console.log(mapData)
 
     return (
         <Layout>
@@ -33,20 +53,11 @@ const DataAnalysis = () => {
                     </BarChart>
                 </div>
 
-                <div className="map">
-                    <h2>Map</h2>
-                    <MapContainer center={position} zoom={13} style={{ height: '600px', width: '100%' }}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker position={position}>
-                            <Popup>
-                                A sample popup.<br />Easily customizable.
-                            </Popup>
-                        </Marker>
-                    </MapContainer>
-                </div>
+                {loading ? (
+                    <p>Loading map data...</p>
+                ) : (
+                    <Map dataPoints={mapData} />
+                )}
             </div>
 
             <Footer style={{ backgroundColor: '#1DA57A', textAlign: 'center' }}>COMP90024 Project 2 ©2023 Created by Group 48</Footer>
