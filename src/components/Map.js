@@ -32,7 +32,7 @@ const Map = ({ dataPoints }) => {
             {dataPoints.map((point, index) => (
                 <Marker key={index} position={[point.lat, point.lng]}>
                     <Popup>
-                        Latitude: {point.lat}, Longitude: {point.lng}
+                        {point.position}: {point.count}
                     </Popup>
                 </Marker>
             ))}
