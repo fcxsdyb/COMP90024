@@ -69,7 +69,7 @@ def car_accident_map():
             }
         },
         "fields": ["_id", "geo", "position"],
-        "limit": 5000
+        "limit": 4000
     }
 
     results = []
