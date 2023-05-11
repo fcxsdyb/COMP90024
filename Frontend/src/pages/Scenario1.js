@@ -17,7 +17,7 @@ const DataAnalysis = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8080/api/cancer_map');
+            const response = await fetch('http://172.26.130.18:8080/api/cancer_map');
             const jsonData = await response.json();
             setMapData(jsonData);
             setLoading(false);
