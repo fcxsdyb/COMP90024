@@ -29,7 +29,7 @@ COPY --from=0 /app/build /app/build
 RUN npm install -g serve
 
 # Expose the port the app will run on
-EXPOSE 8080
+EXPOSE 3000
 
 # Start the application
-CMD ["serve", "-s", "build", "-l", "8080"]]
+CMD ["serve", "-s", "build", "-l", "3000"]]
