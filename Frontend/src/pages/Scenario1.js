@@ -13,6 +13,7 @@ const DataAnalysis = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    
 
     const fetchData = async () => {
         try {
