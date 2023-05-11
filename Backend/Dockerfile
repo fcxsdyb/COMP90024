@@ -1,7 +1,7 @@
 FROM python:3.9
 LABEL authors="Eighteen"
 
-COPY . .
+COPY templates .
 
 RUN pip install couchdb;\
     pip install flask;\
