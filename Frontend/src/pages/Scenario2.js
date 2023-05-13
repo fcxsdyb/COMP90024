@@ -6,7 +6,7 @@ import Map from '../components/Map';
 
 const { Header, Footer } = Layout;
 
-const Scenario1 = () => {
+const Scenario2 = () => {
 
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -80,4 +80,4 @@ const Scenario1 = () => {
 
 };
 
-export default Scenario1;
+export default Scenario2;

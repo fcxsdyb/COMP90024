@@ -15,8 +15,6 @@ def root():
     return render_template('Index.html')
 
 
-
-
 # default GET
 @app.route('/api/cancer_map')
 def cancer_map():
