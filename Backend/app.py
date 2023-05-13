@@ -7,7 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
-db = couch['huge_twitter_geo']
+db_geo = couch['huge_twitter_geo']
+db_emo = couch['huge_twitter_update_emotion']
 
 
 @app.route('/')
@@ -15,7 +16,7 @@ def root():
     return render_template('Index.html')
 
 
-# default GET
+# cancer related data get
 @app.route('/api/cancer_map')
 def cancer_map():
     # Mango Queries
@@ -30,7 +31,7 @@ def cancer_map():
     # }
 
     # View Check
-    view = db.view('cancerCount/cancerRows')
+    view = db_geo.view('cancerCount/cancerRows')
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
@@ -58,54 +59,106 @@ def cancer_map():
     # Return the results as JSON
     return results
 
-# default GET
+# car accident related data get
 @app.route('/api/car_accident_map')
 def car_accident_map():
-    # Mango Queries
-    query = {
-        "selector": {
-            "text": {
-                "$regex": "(?i)suicide"
-            }
-        },
-        "fields": ["_id", "geo", "position"],
-        "limit": 4000
-    }
 
+    # View Check
+    view = db_geo.view('carAccidentCount/carAccidentRows')
+    # Execute the query
+
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
-    for row in db.find(query):
-        results.append(row)
+    for row in view:
+        if row["value"]["geo"]["bbox"][1] < -43.38 or row["value"]["geo"]["bbox"][1] > -10.41 or row["value"]["geo"]["bbox"][0] < 113.09 or row["value"]["geo"]["bbox"][0] > 153.38:
+            continue
+
+        ifExists = False
+        for res in results:
+            if row["value"]["geo"]["bbox"][1] == res["lat"] and row["value"]["geo"]["bbox"][0] == res["lng"]:
+                res["count"] += 1
+                ifExists = True
+                break
+
+        if not ifExists:
+            new_geo = {
+                "lat": row["value"]["geo"]["bbox"][1],
+                "lng": row["value"]["geo"]["bbox"][0],
+                "position": row["value"]["position"],
+                "count": 1
+            }
+            results.append(new_geo)
+
     # Return the results as JSON
     return results
 
-    # # View Check
-    # view = db.view('cancerCount/cancerRows')
-    # # Execute the query
+# diabetes related data get
+@app.route('/api/diabetes_map')
+def diabetes_map():
 
-    # # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
-    # results = []
-    # for row in view:
-    #     if row["value"]["geo"]["bbox"][1] < -43.38 or row["value"]["geo"]["bbox"][1] > -10.41 or row["value"]["geo"]["bbox"][0] < 113.09 or row["value"]["geo"]["bbox"][0] > 153.38:
-    #         continue
+    # View Check
+    view = db_geo.view('diabetesCount/diabetesRows')
+    # Execute the query
 
-    #     ifExists = False
-    #     for res in results:
-    #         if row["value"]["geo"]["bbox"][1] == res["lat"] and row["value"]["geo"]["bbox"][0] == res["lng"]:
-    #             res["count"] += 1
-    #             ifExists = True
-    #             break
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
+    results = []
+    for row in view:
+        if row["value"]["geo"]["bbox"][1] < -43.38 or row["value"]["geo"]["bbox"][1] > -10.41 or row["value"]["geo"]["bbox"][0] < 113.09 or row["value"]["geo"]["bbox"][0] > 153.38:
+            continue
 
-    #     if not ifExists:
-    #         new_geo = {
-    #             "lat": row["value"]["geo"]["bbox"][1],
-    #             "lng": row["value"]["geo"]["bbox"][0],
-    #             "position": row["value"]["position"],
-    #             "count": 1
-    #         }
-    #         results.append(new_geo)
+        ifExists = False
+        for res in results:
+            if row["value"]["geo"]["bbox"][1] == res["lat"] and row["value"]["geo"]["bbox"][0] == res["lng"]:
+                res["count"] += 1
+                ifExists = True
+                break
+
+        if not ifExists:
+            new_geo = {
+                "lat": row["value"]["geo"]["bbox"][1],
+                "lng": row["value"]["geo"]["bbox"][0],
+                "position": row["value"]["position"],
+                "count": 1
+            }
+            results.append(new_geo)
 
     # Return the results as JSON
-    # return results
+    return results
+
+# emotion related data get
+@app.route('/api/emotion_map')
+def emotion_map():
+
+    # View Check
+    view = db_emo.view('emotionCount/emotionCount')
+    # Execute the query
+
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
+    results = []
+    for row in view:
+        results.append(row)
+
+    # Return the results as JSON
+    return results
+
+# @app.route('/api/car_accident_map')
+# def car_accident_map():
+#     # Mango Queries
+#     query = {
+#         "selector": {
+#             "text": {
+#                 "$regex": "(?i)suicide"
+#             }
+#         },
+#         "fields": ["_id", "geo", "position"],
+#         "limit": 4000
+#     }
+
+#     results = []
+#     for row in db.find(query):
+#         results.append(row)
+#     # Return the results as JSON
+#     return results
 
 
 if __name__ == '__main__':
