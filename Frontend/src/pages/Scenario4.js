@@ -17,7 +17,7 @@ const Scenario4 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://172.26.134.78:8080/api/cancer_map');
+            const response = await fetch('http://172.26.134.78:8080/api/emotion_map');
             const jsonData = await response.json();
             setMapData(jsonData);
             setLoading(false);

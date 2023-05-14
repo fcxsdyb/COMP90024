@@ -9,6 +9,7 @@ CORS(app)
 couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
 db_geo = couch['huge_twitter_geo']
 db_emo = couch['huge_twitter_update_emotion']
+db_sudo = couch['sudo_data']
 
 
 @app.route('/')
@@ -126,16 +127,31 @@ def diabetes_map():
     return results
 
 # emotion related data get
-@app.route('/api/emotion_map')
-def emotion_map():
+@app.route('/api/emotion_count')
+def emotion_count():
 
     # View Check
-    view = db_emo.view('emotionCount/emotionCount')
+    view = db_emo.view('emotionCount/emotionCount', group_level = 1)
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
     for row in view:
+        results.append(row)
+
+    # Return the results as JSON
+    return results
+
+# sudo data get
+@app.route('/api/sudo_data')
+def sudo_data():
+    # Mango Queries
+    query = {
+        "selector": {}
+    }
+
+    results = []
+    for row in db_sudo.find(query):
         results.append(row)
 
     # Return the results as JSON
@@ -159,7 +175,6 @@ def emotion_map():
 #         results.append(row)
 #     # Return the results as JSON
 #     return results
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
