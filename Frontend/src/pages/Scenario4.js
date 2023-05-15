@@ -8,7 +8,7 @@ const { Header, Footer } = Layout;
 
 const Scenario4 = () => {
 
-    const [mapData, setMapData] = useState([]);
+    const [barData, setBarData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,9 +17,9 @@ const Scenario4 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://172.26.134.78:8080/api/emotion_map');
+            const response = await fetch('http://127.0.0.1:8080/api/emotion_count');
             const jsonData = await response.json();
-            setMapData(jsonData);
+            setBarData(jsonData);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -27,7 +27,7 @@ const Scenario4 = () => {
         }
     };
 
-    console.log(mapData)
+    console.log(barData);
 
     const navigate = useNavigate();
     const handleGoBack = () => {
@@ -52,7 +52,7 @@ const Scenario4 = () => {
                     {
                         name: 'Access From',
                         type: 'pie',
-                        radius: ['50%', '70%'],
+                        radius: ['45%', '70%'],
                         avoidLabelOverlap: false,
                         itemStyle: {
                             borderRadius: 20,
@@ -73,20 +73,14 @@ const Scenario4 = () => {
                         labelLine: {
                             show: false,
                         },
-                        data: [
-                            { value: 1048, name: 'Search Engine' },
-                            { value: 735, name: 'Direct' },
-                            { value: 580, name: 'Email' },
-                            { value: 484, name: 'Union Ads' },
-                            { value: 300, name: 'Video Ads' },
-                        ],
+                        data: barData,
                     },
                 ],
             });
 
             window.addEventListener('resize', myChart.resize);
         }
-    }, [chartRef]);
+    }, [chartRef, barData]);
 
     return (
         <Layout>
@@ -97,18 +91,18 @@ const Scenario4 = () => {
 
                 <div
                     ref={chartRef}
-                    style={{ width: '100%', height: '500px', margin: '0 auto' }}
+                    style={{ width: '100%', height: '400px', margin: '0 auto' }}
                 ></div>
 
-                {loading ? (
+                {/* {loading ? (
                     <p>Loading map data...</p>
                 ) : (
-                    <Map dataPoints={mapData} />
-                )}
+                    <Map dataPoints={barData} />
+                )} */}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                <Button type="primary" onClick={handleGoBack} style={{ width: '10%', textAlign: 'center' }}>
+                <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
                     Go Back to Homepage
                 </Button>
             </div>

@@ -15,7 +15,6 @@ const Scenario3 = () => {
         fetchData();
     }, []);
 
-
     const fetchData = async () => {
         try {
             const response = await fetch('http://172.26.134.78:8080/api/diabetes_map');
@@ -68,7 +67,7 @@ const Scenario3 = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                <Button type="primary" onClick={handleGoBack} style={{ width: '10%', textAlign: 'center' }}>
+                <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
                     Go Back to Homepage
                 </Button>
             </div>

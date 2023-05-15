@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from flask_restful import Api, Resource
-import couchdb
+import couchdb, json
 
 app = Flask(__name__)
 CORS(app)
@@ -161,17 +161,22 @@ def sudo_data_cancer():
 
     results = []
     for row in db_sudo.find(query):
+        rest = row["whole_cancer_death"] - row["breast_cancer_females_death"] - row["colorectal_cancer_death"] - row["lung_cancer_death"]
         cancer = {
             "breast_cancer": row["breast_cancer_females_death"],
             "colorectal_cancer_death": row["colorectal_cancer_death"],
             "lung_cancer": row["lung_cancer_death"],
-            "all_cancer": row["whole_cancer_death"]
+            "other_cancer": rest
         }
-        
+        print(cancer)
         results.append(cancer)
 
     # Return the results as JSON
-    return results
+    return app.response_class(
+        response=json.dumps(results, sort_keys=False),
+        status=200,
+        mimetype='application/json'
+    )
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
