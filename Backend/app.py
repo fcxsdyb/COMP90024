@@ -9,7 +9,8 @@ CORS(app)
 couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
 db_geo = couch['huge_twitter_geo']
 db_emo = couch['huge_twitter_update_emotion']
-db_sudo = couch['sudo_data']
+db_sudo_bar = couch['sudo_data']
+db_sudo_pie = couch['sudo_data_death']
 
 
 @app.route('/')
@@ -151,7 +152,7 @@ def emotion_count():
     # Return the results as JSON
     return results
 
-# sudo data get
+# sudo data bar get
 @app.route('/api/sudo_data_cancer')
 def sudo_data_cancer():
     # Mango Queries
@@ -160,7 +161,7 @@ def sudo_data_cancer():
     }
 
     results = []
-    for row in db_sudo.find(query):
+    for row in db_sudo_bar.find(query):
         rest = row["whole_cancer_death"] - row["breast_cancer_females_death"] - row["colorectal_cancer_death"] - row["lung_cancer_death"]
         cancer = {
             "breast_cancer": row["breast_cancer_females_death"],
@@ -177,6 +178,20 @@ def sudo_data_cancer():
         status=200,
         mimetype='application/json'
     )
+
+# sudo data bar get
+@app.route('/api/sudo_data_cancer_pie')
+def sudo_data_cancer_pie():
+    # Mango Queries
+    query = {
+        "selector": {}
+    }
+
+    results = []
+    for row in db_sudo_pie.find(query):
+        results.append(row)
+    # Return the results as JSON
+    return results
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
