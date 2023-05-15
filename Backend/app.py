@@ -167,6 +167,7 @@ def sudo_data_cancer():
             "lung_cancer": row["lung_cancer_death"],
             "all_cancer": row["whole_cancer_death"]
         }
+        
         results.append(cancer)
 
     # Return the results as JSON
