@@ -30,6 +30,11 @@ def cancer_map():
     #     "fields": ["_id", "geo", "position"],
     #     "limit": 5000
     # }
+    #     results = []
+    # for row in db.find(query):
+    #     results.append(row)
+    # # Return the results as JSON
+    # return results
 
     # View Check
     view = db_geo.view('cancerCount/cancerRows')
@@ -137,14 +142,18 @@ def emotion_count():
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
     for row in view:
-        results.append(row)
+        new_row = {
+            "name": row["key"],
+            "value": row["value"]
+        }
+        results.append(new_row)
 
     # Return the results as JSON
     return results
 
 # sudo data get
-@app.route('/api/sudo_data')
-def sudo_data():
+@app.route('/api/sudo_data_cancer')
+def sudo_data_cancer():
     # Mango Queries
     query = {
         "selector": {}
@@ -152,29 +161,16 @@ def sudo_data():
 
     results = []
     for row in db_sudo.find(query):
-        results.append(row)
+        cancer = {
+            "breast_cancer": row["breast_cancer_females_death"],
+            "colorectal_cancer_death": row["colorectal_cancer_death"],
+            "lung_cancer": row["lung_cancer_death"],
+            "all_cancer": row["whole_cancer_death"]
+        }
+        results.append(cancer)
 
     # Return the results as JSON
     return results
-
-# @app.route('/api/car_accident_map')
-# def car_accident_map():
-#     # Mango Queries
-#     query = {
-#         "selector": {
-#             "text": {
-#                 "$regex": "(?i)suicide"
-#             }
-#         },
-#         "fields": ["_id", "geo", "position"],
-#         "limit": 4000
-#     }
-
-#     results = []
-#     for row in db.find(query):
-#         results.append(row)
-#     # Return the results as JSON
-#     return results
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
