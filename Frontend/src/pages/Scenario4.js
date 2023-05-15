@@ -17,7 +17,7 @@ const Scenario4 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8080/api/emotion_count');
+            const response = await fetch('http://172.26.134.78:8080/api/emotion_count');
             const jsonData = await response.json();
             setBarData(jsonData);
             setLoading(false);

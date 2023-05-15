@@ -8,21 +8,24 @@ const { Header, Footer } = Layout;
 
 const Scenario1 = () => {
 
+    const [pieData, setPieData] = useState([]);
     const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Use useRef to prevent unnecessary re-renders of barFinal.
     const barFinalRef = useRef([
-        { name: 'All Cancer Death', type: 'bar', stack: 'total', label: { show: true }, emphasis: { focus: 'series' }, data: [] },
-        { name: 'Breast Cancer Death', type: 'bar', stack: 'total', label: { show: true }, emphasis: { focus: 'series' }, data: [] },
-        { name: 'Colorectal Cancer Death', type: 'bar', stack: 'total', label: { show: true }, emphasis: { focus: 'series' }, data: [] },
-        { name: 'Lung Cancer Death', type: 'bar', stack: 'total', label: { show: true }, emphasis: { focus: 'series' }, data: [] },
+        { name: 'Breast Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] },
+        { name: 'Colorectal Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] },
+        { name: 'Lung Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] },
+        { name: 'Other Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] }
     ]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const responsePie = await fetch('http://172.26.134.78:8080/api/sudo_data_cancer_pie');
+                const jsonPieData = await responsePie.json();
                 const responseBar = await fetch('http://172.26.134.78:8080/api/sudo_data_cancer');
                 const jsonBarData = await responseBar.json();
                 const responseMap = await fetch('http://172.26.134.78:8080/api/cancer_map');
@@ -41,10 +44,10 @@ const Scenario1 = () => {
 
     useEffect(() => {
         barData.forEach(item => {
-            barFinalRef.current[0].data.push(item.all_cancer);
-            barFinalRef.current[1].data.push(item.breast_cancer);
-            barFinalRef.current[2].data.push(item.colorectal_cancer_death);
-            barFinalRef.current[3].data.push(item.lung_cancer);
+            barFinalRef.current[0].data.push(item.breast_cancer);
+            barFinalRef.current[1].data.push(item.colorectal_cancer_death);
+            barFinalRef.current[2].data.push(item.lung_cancer);
+            barFinalRef.current[3].data.push(item.other_cancer);
         });
     }, [barData]);
 
