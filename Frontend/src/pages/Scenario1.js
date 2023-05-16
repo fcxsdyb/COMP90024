@@ -25,12 +25,36 @@ const Scenario1 = () => {
         const fetchData = async () => {
             try {
                 const responsePie = await fetch('http://172.26.134.78:8080/api/sudo_data_cancer_pie');
-                const jsonPieData = await responsePie.json();
+                let jsonPieData = await responsePie.json();
+
+                // Assume jsonPieData is an array
+                jsonPieData = jsonPieData.map(item => {
+                    const totalDeaths = item.total_death;
+                    let newArray = [];
+    
+                    // Iterate over the keys and values of each item
+                    for (const [key, value] of Object.entries(item)) {
+                        if (key !== 'total_death' && key !== '_id' && key !== '_rev') {
+                            // Remove "death_of_" prefix, replace underscores with spaces, and capitalize each word
+                            let newKey = key.replace('death_of_', '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                            // Append "%" to the value and convert it to a string
+                            let newValue = `${((value / totalDeaths) * 100).toFixed(2)}`;
+                            newArray.push({value: newValue, name: newKey});
+                        }
+                    }
+    
+                    // Sort array by value in descending order
+                    newArray.sort((a, b) => parseFloat(b.value) - parseFloat(a.value));
+                    return newArray;
+                });
+                setPieData(jsonPieData);                  
+
                 const responseBar = await fetch('http://172.26.134.78:8080/api/sudo_data_cancer');
                 const jsonBarData = await responseBar.json();
+                setBarData(jsonBarData);
+
                 const responseMap = await fetch('http://172.26.134.78:8080/api/cancer_map');
                 const jsonMapData = await responseMap.json();
-                setBarData(jsonBarData);
                 setMapData(jsonMapData);
                 setLoading(false);
             } catch (error) {
@@ -56,7 +80,47 @@ const Scenario1 = () => {
         navigate('/');
     };
 
-    const chartRef = useRef(null);
+    let pieChartRef = useRef(null);
+
+    useEffect(() => {
+        if (pieChartRef.current && pieData.length > 0) { // Ensure pieChartRef and pieData are available before initializing the chart.
+            const myChart = echarts.init(pieChartRef.current);
+
+            const option = {
+                legend: {
+                    top: 'bottom'
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Death Causes Chart',
+                        type: 'pie',
+                        radius: [50, 200],
+                        center: ['50%', '50%'],
+                        roseType: 'radius',
+                        itemStyle: {
+                            borderRadius: 10
+                        },
+                        data: pieData[0]
+                    }
+                ]
+            };
+            myChart.setOption(option);
+
+            // Cleanup function to remove event listener on component unmount.
+            return () => window.removeEventListener('resize', myChart.resize);
+        }
+    }, [pieChartRef, pieData]);
+
+    let chartRef = useRef(null);
 
     useEffect(() => {
         if (chartRef.current && barData.length > 0) { // Ensure chartRef and barData are available before initializing the chart.
@@ -85,6 +149,8 @@ const Scenario1 = () => {
                 <h1>Data Analysis</h1>
 
                 <div ref={chartRef} style={{ width: '100%', height: '500px' }}></div>
+
+                <div ref={pieChartRef} style={{ width: '100%', height: '500px' }}></div>
 
                 {loading ? (
                     <p>Loading map data...</p>
