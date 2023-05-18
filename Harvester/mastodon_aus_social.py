@@ -6,6 +6,8 @@ import json
 from mastodon import Mastodon, StreamListener
 import re
 
+from textblob import TextBlob
+
 # connect to the couchdb
 admin = 'Bob'
 password = 'CCCansible48'
@@ -50,6 +52,16 @@ class Listener(StreamListener):
         new_store['id'] = json_single['account']['id']
         new_store['content'] = readable_string
         new_store['created_at'] = json_single['created_at']
+
+        analysis = TextBlob(new_store['content'])
+        sentiment = analysis.sentiment.polarity
+
+        if sentiment > 0:
+            new_store["emotion"] = "Positive"
+        elif sentiment < 0:
+            new_store["emotion"] = "Negative"
+        else:
+            new_store["emotion"] = "Neutral"
         doc_id, doc_rev = db.save(new_store)
 
 
