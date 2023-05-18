@@ -56,9 +56,9 @@ const Scenario4 = () => {
                         radius: ['45%', '70%'],
                         avoidLabelOverlap: false,
                         itemStyle: {
-                            borderRadius: 20,
+                            borderRadius: 10,
                             borderColor: '#fff',
-                            borderWidth: 2,
+                            borderWidth: 3,
                         },
                         label: {
                             show: false,
