@@ -24,7 +24,7 @@ const Map = ({ dataPoints }) => {
     setDefaultIcon();
 
     return (
-        <MapContainer center={defaultCenter} zoom={4} style={{ height: '100vh', width: '100%' }}>
+        <MapContainer center={defaultCenter} zoom={4} style={{ marginLeft: '20px', marginRight: '20px', height: '600px', width: '100%' }}>
             <TileLayer
                 attribution='&amp;copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

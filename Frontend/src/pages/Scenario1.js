@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import Map from '../components/Map';
+import DIYMenu from '../components/DIYMenu';
 
-const { Header, Footer } = Layout;
+const { Sider, Content } = Layout;
 
 const Scenario1 = () => {
 
@@ -31,7 +32,7 @@ const Scenario1 = () => {
                 jsonPieData = jsonPieData.map(item => {
                     const totalDeaths = item.total_death;
                     let newArray = [];
-    
+
                     // Iterate over the keys and values of each item
                     for (const [key, value] of Object.entries(item)) {
                         if (key !== 'total_death' && key !== '_id' && key !== '_rev') {
@@ -39,15 +40,15 @@ const Scenario1 = () => {
                             let newKey = key.replace('death_of_', '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                             // Append "%" to the value and convert it to a string
                             let newValue = `${((value / totalDeaths) * 100).toFixed(2)}`;
-                            newArray.push({value: newValue, name: newKey});
+                            newArray.push({ value: newValue, name: newKey });
                         }
                     }
-    
+
                     // Sort array by value in descending order
                     newArray.sort((a, b) => parseFloat(b.value) - parseFloat(a.value));
                     return newArray;
                 });
-                setPieData(jsonPieData);                  
+                setPieData(jsonPieData);
 
                 const responseBar = await fetch('http://172.26.134.78:8080/api/sudo_data_cancer');
                 const jsonBarData = await responseBar.json();
@@ -87,31 +88,33 @@ const Scenario1 = () => {
             const myChart = echarts.init(pieChartRef.current);
 
             const option = {
-                legend: {
-                    top: 'bottom'
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: { show: true },
-                        dataView: { show: true, readOnly: false },
-                        restore: { show: true },
-                        saveAsImage: { show: true }
-                    }
-                },
-                series: [
+                title: {
+                    text: 'The ten leading causes of human death in 2014 to 2018',
+                    subtext: 'Data from SUDO dataset PHIDU - Premature Mortality - Cause (PHN) 2014-2018',
+                    left: 'center'
+                  },
+                  tooltip: {
+                    trigger: 'item'
+                  },
+                  legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                  },
+                  series: [
                     {
-                        name: 'Death Causes Chart',
-                        type: 'pie',
-                        radius: [50, 200],
-                        center: ['50%', '50%'],
-                        roseType: 'radius',
+                      name: 'Access From',
+                      type: 'pie',
+                      radius: '45%',
+                      data: pieData[0],
+                      emphasis: {
                         itemStyle: {
-                            borderRadius: 10
-                        },
-                        data: pieData[0]
+                          shadowBlur: 10,
+                          shadowOffsetX: 0,
+                          shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                      }
                     }
-                ]
+                  ]
             };
             myChart.setOption(option);
 
@@ -143,29 +146,33 @@ const Scenario1 = () => {
 
     return (
         <Layout>
-            <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }} />
+            <Sider width={200} style={{ overflow: "auto" }}>
+                <DIYMenu />
+            </Sider>
 
-            <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                <h1>Data Analysis</h1>
+            <Layout>
+                <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                    <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
+                        <h1>Comparison of cancer attention and real death toll</h1>
 
-                <div ref={chartRef} style={{ width: '100%', height: '500px' }}></div>
+                        <div ref={chartRef} style={{ margin: '30px', width: '100%', height: '400px', textAlign: 'center' }}></div>
 
-                <div ref={pieChartRef} style={{ width: '100%', height: '500px' }}></div>
+                        <div ref={pieChartRef} style={{ marginTop: '20px', width: '100%', height: '500px' }}></div>
 
-                {loading ? (
-                    <p>Loading map data...</p>
-                ) : (
-                    <Map dataPoints={mapData} />
-                )}
-            </div>
+                        {loading ? (
+                            <p>Loading map data...</p>
+                        ) : (
+                            <Map dataPoints={mapData} />
+                        )}
+                    </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
-                    Go Back to Homepage
-                </Button>
-            </div>
-
-            <Footer style={{ backgroundColor: '#1DA57A', textAlign: 'center' }}>COMP90024 Project 2 ©2023 Created by Group 48</Footer>
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
+                        <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
+                            Go Back to Homepage
+                        </Button>
+                    </div>
+                </Content>
+            </Layout>
         </Layout>
     );
 };
