@@ -28,8 +28,6 @@ const Scenario4 = () => {
         }
     };
 
-    console.log(barData);
-
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');

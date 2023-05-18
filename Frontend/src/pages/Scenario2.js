@@ -28,8 +28,6 @@ const Scenario2 = () => {
         }
     };
 
-    console.log(mapData)
-
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');

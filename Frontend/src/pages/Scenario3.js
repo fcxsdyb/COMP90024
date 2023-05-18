@@ -36,8 +36,6 @@ const Scenario3 = () => {
         { name: 'D', value: 100 },
     ];
 
-    console.log(mapData)
-
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');
