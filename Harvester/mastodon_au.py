@@ -5,6 +5,7 @@ import json
 # need to install mastodon.py
 from mastodon import Mastodon, StreamListener
 import re
+from textblob import TextBlob
 
 # connect to the couchdb
 admin = 'Bob'
@@ -33,6 +34,7 @@ class Listener(StreamListener):
     def on_update(self, status):
         # if some message have some error, just print error to let the script run
         try:
+
             json_element = json.dumps(status, indent=2, sort_keys=True, default=str)
             json_single = json.loads(json_element)
 
@@ -52,6 +54,16 @@ class Listener(StreamListener):
             new_store['id'] = json_single['account']['id']
             new_store['content'] = readable_string
             new_store['created_at'] = json_single['created_at']
+
+            analysis = TextBlob(new_store['content'])
+            sentiment = analysis.sentiment.polarity
+
+            if sentiment > 0:
+                new_store["emotion"] = "Positive"
+            elif sentiment < 0:
+                new_store["emotion"] = "Negative"
+            else:
+                new_store["emotion"] = "Neutral"
             doc_id, doc_rev = db.save(new_store)
         except:
             print("error")
