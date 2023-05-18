@@ -62,8 +62,6 @@ const Scenario2 = () => {
             </Layout>
         </Layout>
     );
-
-
 };
 
 export default Scenario2;
