@@ -46,7 +46,7 @@ const Scenario3 = () => {
             <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }} />
 
             <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                <h1>Data Analysis</h1>
+                <h1>Comparison of diabetes attention and real death toll</h1>
 
                 <div className="bar-chart">
                     <h2>Bar Chart</h2>

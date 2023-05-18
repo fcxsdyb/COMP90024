@@ -87,7 +87,7 @@ const Scenario4 = () => {
             <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }} />
 
             <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                <h1>Data Analysis</h1>
+                <h1>Comparison of suicide attention and real death toll</h1>
 
                 <div
                     ref={chartRef}
