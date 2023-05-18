@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
-import Map from '../components/Map';
+import DIYMenu from '../components/DIYMenu';
+import Title from 'antd/es/typography/Title';
 
-const { Header, Footer } = Layout;
+const { Sider, Content } = Layout;
 
 const Scenario4 = () => {
 
@@ -84,34 +85,37 @@ const Scenario4 = () => {
 
     return (
         <Layout>
-            <Header style={{ backgroundColor: '#1DA57A', textAlign: 'center' }} />
+            <Sider width={200} style={{ overflow: "auto" }}>
+                <DIYMenu />
+            </Sider>
 
-            <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                <h1>Comparison of suicide attention and real death toll</h1>
+            <Layout>
+                <Content style={{
+                    minHeight: 280,
+                    maxWidth: 'calc(100% - 200px)',
+                    margin: 'auto'
+                }}>
+                    <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
+                        <Title>Comparison of Suicide Attention and Real Death Toll</Title>
+                    </div>
 
-                <div
-                    ref={chartRef}
-                    style={{ width: '100%', height: '400px', margin: '0 auto' }}
-                ></div>
+                    <div
+                        ref={chartRef}
+                        style={{
+                            width: '100%',
+                            height: '400px',
+                        }}>
+                    </div>
 
-                {/* {loading ? (
-                    <p>Loading map data...</p>
-                ) : (
-                    <Map dataPoints={barData} />
-                )} */}
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
-                    Go Back to Homepage
-                </Button>
-            </div>
-
-            <Footer style={{ backgroundColor: '#1DA57A', textAlign: 'center' }}>COMP90024 Project 2 ©2023 Created by Group 48</Footer>
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
+                        <Button type="primary" onClick={handleGoBack} style={{ width: '20%', textAlign: 'center' }}>
+                            Go Back to Homepage
+                        </Button>
+                    </div>
+                </Content>
+            </Layout>
         </Layout>
     );
-
-
 };
 
 export default Scenario4;

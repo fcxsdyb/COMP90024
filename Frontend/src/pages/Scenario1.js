@@ -4,6 +4,7 @@ import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import Map from '../components/Map';
 import DIYMenu from '../components/DIYMenu';
+import Title from 'antd/es/typography/Title';
 
 const { Sider, Content } = Layout;
 
@@ -92,29 +93,29 @@ const Scenario1 = () => {
                     text: 'The ten leading causes of human death in 2014 to 2018',
                     subtext: 'Data from SUDO dataset PHIDU - Premature Mortality - Cause (PHN) 2014-2018',
                     left: 'center'
-                  },
-                  tooltip: {
+                },
+                tooltip: {
                     trigger: 'item'
-                  },
-                  legend: {
+                },
+                legend: {
                     orient: 'vertical',
                     left: 'left'
-                  },
-                  series: [
+                },
+                series: [
                     {
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: '45%',
-                      data: pieData[0],
-                      emphasis: {
-                        itemStyle: {
-                          shadowBlur: 10,
-                          shadowOffsetX: 0,
-                          shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: '45%',
+                        data: pieData[0],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
                         }
-                      }
                     }
-                  ]
+                ]
             };
             myChart.setOption(option);
 
@@ -153,11 +154,17 @@ const Scenario1 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <h1>Comparison of cancer attention and real death toll</h1>
+                        <Title>Comparison of Cancer Attention and Real Death Toll</Title>
 
-                        <div ref={chartRef} style={{ margin: '30px', width: '100%', height: '400px', textAlign: 'center' }}></div>
+                        <div
+                            ref={chartRef}
+                            style={{ margin: '30px', width: '100%', height: '400px', textAlign: 'center' }}>
+                        </div>
 
-                        <div ref={pieChartRef} style={{ marginTop: '20px', width: '100%', height: '500px' }}></div>
+                        <div
+                            ref={pieChartRef}
+                            style={{ marginTop: '20px', width: '100%', height: '500px' }}>
+                        </div>
 
                         {loading ? (
                             <p>Loading map data...</p>
