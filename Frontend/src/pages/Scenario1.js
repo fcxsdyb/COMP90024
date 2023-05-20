@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
-import Map from '../components/Map';
+import DensityMap from '../components/MapDensity';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 
@@ -93,11 +93,7 @@ const Scenario1 = () => {
                             style={{ margin: '30px', width: '100%', height: '400px', textAlign: 'center' }}>
                         </div>
 
-                        {loading ? (
-                            <p>Loading map data...</p>
-                        ) : (
-                            <Map dataPoints={mapData} />
-                        )}
+                        <DensityMap mapData={mapData} />
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>

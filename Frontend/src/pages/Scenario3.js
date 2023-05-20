@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import Map from '../components/Map';
+import MapDensity from '../components/MapDensity';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 
@@ -50,7 +50,7 @@ const Scenario3 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Diabetes Attention and Real Death Toll</Title>
+                        <Title>Comparison of Car Accident and Real Death Toll</Title>
 
                         <div className="bar-chart">
                             <h2>Bar Chart</h2>
@@ -66,7 +66,7 @@ const Scenario3 = () => {
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <Map dataPoints={mapData} />
+                            <MapDensity />
                         )}
                     </div>
 

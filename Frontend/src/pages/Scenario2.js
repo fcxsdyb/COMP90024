@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
-import Map from '../components/Map';
+import DensityMap from '../components/MapDensity';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 
@@ -42,12 +42,12 @@ const Scenario2 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Car Accident Attention and Real Death Toll</Title>
+                        <Title>Comparison of Suicide Attention and Real Death Toll</Title>
 
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <Map dataPoints={mapData} />
+                            <DensityMap />
                         )}
                     </div>
 

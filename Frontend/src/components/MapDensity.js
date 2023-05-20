@@ -10,7 +10,7 @@ echarts.use(
     [TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent, MapChart, SVGRenderer]
 );
 
-function AustraliaMap() {
+function DensityMap({ mapData }) {
     const [option, setOption] = useState(null);
 
     useEffect(() => {
@@ -30,8 +30,8 @@ function AustraliaMap() {
             },
             visualMap: {
                 left: 'right',
-                min: 500000,
-                max: 5000000,
+                min: 5,
+                max: 1000,
                 inRange: {
                     color: [
                         '#313695',
@@ -71,20 +71,11 @@ function AustraliaMap() {
                             show: true
                         }
                     },
-                    data: [
-                        { name: 'New South Wales', value: 8006400 },
-                        { name: 'Victoria', value: 6594800 },
-                        { name: 'Queensland', value: 5095100 },
-                        { name: 'Western Australia', value: 2624800 },
-                        { name: 'South Australia', value: 1756500 },
-                        { name: 'Tasmania', value: 541100 },
-                        { name: 'Northern Territory', value: 245600 },
-                        { name: 'Australian Capital Territory', value: 431100 }
-                    ]
+                    data: mapData
                 }
             ]
         });
-    }, []);
+    }, [mapData]);
 
     return (
         <div>
@@ -93,4 +84,4 @@ function AustraliaMap() {
     );
 }
 
-export default AustraliaMap;
+export default DensityMap;

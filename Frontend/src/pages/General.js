@@ -4,19 +4,24 @@ import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
-import AustraliaMap from '../components/MapDensity';
+import Map from '../components/Map';
 
 const { Sider, Content } = Layout;
 
 const General = () => {
 
     const [pieData, setPieData] = useState([]);
+    const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responsePie = await fetch('http://172.26.132.174:8080/api/sudo_data_cancer_pie');
+                const responseMap = await fetch('http://172.26.132.174:8080/api/cancer_map');
+                const jsonMapData = await responseMap.json();
+                setMapData(jsonMapData);
+
+                const responsePie = await fetch('http://172.26.132.174:8080/api/sudo_data_death_pie');
                 let jsonPieData = await responsePie.json();
 
                 // Assume jsonPieData is an array
@@ -116,7 +121,8 @@ const General = () => {
                                     ref={pieChartRef}
                                     style={{ marginTop: '20px', width: '100%', height: '500px' }}>
                                 </div>
-                                <AustraliaMap />
+
+                                <Map dataPoints={mapData} />
                             </>
                         )}
                     </div>
