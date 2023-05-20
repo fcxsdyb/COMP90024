@@ -119,31 +119,19 @@ def cancer_map():
 @app.route('/api/car_accident_map')
 def car_accident_map():
 
+    db_emo = couch['huge_twitter_update_emotion_state'] 
     # View Check
-    view = db_geo.view('carAccidentCount/carAccidentRows')
+    view = db_emo.view('carAccidentCount/carAccidentCount', group_level = 1)
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
     for row in view:
-        if row["value"]["geo"]["bbox"][1] < -43.38 or row["value"]["geo"]["bbox"][1] > -10.41 or row["value"]["geo"]["bbox"][0] < 113.09 or row["value"]["geo"]["bbox"][0] > 153.38:
-            continue
-
-        ifExists = False
-        for res in results:
-            if row["value"]["geo"]["bbox"][1] == res["lat"] and row["value"]["geo"]["bbox"][0] == res["lng"]:
-                res["count"] += 1
-                ifExists = True
-                break
-
-        if not ifExists:
-            new_geo = {
-                "lat": row["value"]["geo"]["bbox"][1],
-                "lng": row["value"]["geo"]["bbox"][0],
-                "position": row["value"]["position"],
-                "count": 1
-            }
-            results.append(new_geo)
+        new_row = {
+            "name": row["key"],
+            "value": row["value"]
+        }
+        results.append(new_row)
 
     # Return the results as JSON
     return results
@@ -152,6 +140,7 @@ def car_accident_map():
 @app.route('/api/emotion_count')
 def emotion_count():
 
+    db_emo = couch['huge_twitter_update_emotion_state'] 
     # View Check
     view = db_emo.view('emotionCount/emotionCount', group_level = 1)
     # Execute the query
@@ -167,8 +156,6 @@ def emotion_count():
 
     # Return the results as JSON
     return results
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
