@@ -12,7 +12,6 @@ db_emo = couch['huge_twitter_update_emotion']
 db_sudo_bar = couch['sudo_data']
 db_sudo_pie = couch['sudo_data_death']
 
-
 @app.route('/')
 def root():
     return render_template('Index.html')
