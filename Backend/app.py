@@ -31,8 +31,6 @@ def root():
 # return results
 
 # General part pie chart data
-
-
 @app.route('/api/sudo_data_death_pie')
 def sudo_data_death_pie():
 
@@ -50,8 +48,6 @@ def sudo_data_death_pie():
     return results
 
 # emotion related data get
-
-
 @app.route('/api/general_map')
 def general_map():
 
@@ -72,8 +68,6 @@ def general_map():
     return results
 
 # sudo cancer data bar get
-
-
 @app.route('/api/sudo_data_cancer')
 def sudo_data_cancer():
 
@@ -104,8 +98,6 @@ def sudo_data_cancer():
     )
 
 # cancer map related data get
-
-
 @app.route('/api/cancer_map')
 def cancer_map():
 
@@ -127,8 +119,6 @@ def cancer_map():
     return results
 
 # car accident related data get
-
-
 @app.route('/api/car_accident_map')
 def car_accident_map():
 
@@ -150,8 +140,6 @@ def car_accident_map():
     return results
 
 # emotion related data get
-
-
 @app.route('/api/emotion_count')
 def emotion_count():
 
