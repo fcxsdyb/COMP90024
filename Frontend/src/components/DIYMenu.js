@@ -17,6 +17,7 @@ const DIYMenu = () => {
 
     return (
         <Menu mode="inline" defaultSelectedKeys={[currentKey]} theme='dark' onSelect={handleMenuSelect}>
+            <Menu.Item key="general" icon={<SettingOutlined />}>General</Menu.Item>
             <Menu.Item key="scenario1" icon={<SettingOutlined />}>Scenario 1</Menu.Item>
             <Menu.Item key="scenario2" icon={<LinkOutlined />}>Scenario 2</Menu.Item>
             <Menu.Item key="scenario3" icon={<AppstoreOutlined />}>Scenario 3</Menu.Item>
