@@ -1,14 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from flask_restful import Api, Resource
-import couchdb, json
+import couchdb
+import json
 
 app = Flask(__name__)
 CORS(app)
 
 couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
-db_geo = couch['huge_twitter_geo']
-db_sudo_bar = couch['sudo_data']
+
 
 @app.route('/')
 def root():
@@ -31,15 +31,17 @@ def root():
 # return results
 
 # General part pie chart data
+
+
 @app.route('/api/sudo_data_death_pie')
 def sudo_data_death_pie():
 
     db_sudo_pie = couch['sudo_data_death']
-    
+
     # Mango Queries
     query = {
         "selector": {}
-    }    
+    }
 
     results = []
     for row in db_sudo_pie.find(query):
@@ -48,12 +50,14 @@ def sudo_data_death_pie():
     return results
 
 # emotion related data get
+
+
 @app.route('/api/general_map')
 def general_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state']   
+    db_emo = couch['huge_twitter_update_emotion_state']
     # View Check
-    view = db_emo.view('regionCount/regionCount', group_level = 1)
+    view = db_emo.view('regionCount/regionCount', group_level=1)
     # Execute the query
 
     results = []
@@ -68,8 +72,12 @@ def general_map():
     return results
 
 # sudo cancer data bar get
+
+
 @app.route('/api/sudo_data_cancer')
 def sudo_data_cancer():
+
+    db_sudo_bar = couch['sudo_data']
     # Mango Queries
     query = {
         "selector": {}
@@ -77,7 +85,8 @@ def sudo_data_cancer():
 
     results = []
     for row in db_sudo_bar.find(query):
-        rest = row["whole_cancer_death"] - row["breast_cancer_females_death"] - row["colorectal_cancer_death"] - row["lung_cancer_death"]
+        rest = row["whole_cancer_death"] - row["breast_cancer_females_death"] - \
+            row["colorectal_cancer_death"] - row["lung_cancer_death"]
         cancer = {
             "breast_cancer": row["breast_cancer_females_death"],
             "colorectal_cancer_death": row["colorectal_cancer_death"],
@@ -95,12 +104,14 @@ def sudo_data_cancer():
     )
 
 # cancer map related data get
+
+
 @app.route('/api/cancer_map')
 def cancer_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state'] 
+    db_emo = couch['huge_twitter_update_emotion_state']
     # View Check
-    view = db_emo.view('cancerCount/cancerCount', group_level = 1)
+    view = db_emo.view('cancerCount/cancerCount', group_level=1)
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
@@ -116,12 +127,14 @@ def cancer_map():
     return results
 
 # car accident related data get
+
+
 @app.route('/api/car_accident_map')
 def car_accident_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state'] 
+    db_emo = couch['huge_twitter_update_emotion_state']
     # View Check
-    view = db_emo.view('carAccidentCount/carAccidentCount', group_level = 1)
+    view = db_emo.view('carAccidentCount/carAccidentCount', group_level=1)
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
@@ -137,12 +150,14 @@ def car_accident_map():
     return results
 
 # emotion related data get
+
+
 @app.route('/api/emotion_count')
 def emotion_count():
 
-    db_emo = couch['huge_twitter_update_emotion_state'] 
+    db_emo = couch['huge_twitter_update_emotion_state']
     # View Check
-    view = db_emo.view('emotionCount/emotionCount', group_level = 1)
+    view = db_emo.view('emotionCount/emotionCount', group_level=1)
     # Execute the query
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
@@ -156,6 +171,7 @@ def emotion_count():
 
     # Return the results as JSON
     return results
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
