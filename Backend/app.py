@@ -383,14 +383,14 @@ def mastodon_suicide_data():
     }
 
     for row in view:
-        mastodon_data_whole[row['key']] =  mastodon_data_whole[row['key']] + row["value"]
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for row in view2:
-        mastodon_data_whole[row['key']] =  mastodon_data_whole[row['key']] + row["value"]
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for key, value in mastodon_data_whole.items():
         new_dic = {
-            key:value
+            key: value
         }
         results.append(new_dic)
 
@@ -398,38 +398,39 @@ def mastodon_suicide_data():
     # Return the results as JSON
     return jsonify(results)
 
-# @app.route("/api/mastodon_health_care")
-# def mastodon_suicide_data():
-#     view = get_view('mastodon_au_social_final_with_emotion',
-#                     'suicide_mastodon/suicide_emotion', 1)
-#
-#     view2 = get_view("mastodon_au_final_with_emotion",
-#                      'suicide_mastodon/suicide_emotion', 1)
-#
-#     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
-#     results = []
-#
-#     mastodon_data_whole = {
-#         "Negative":0,
-#         "Positive":0,
-#         "Neutral":0
-#     }
-#
-#     for row in view:
-#         mastodon_data_whole[row['key']] =  mastodon_data_whole[row['key']] + row["value"]
-#
-#     for row in view2:
-#         mastodon_data_whole[row['key']] =  mastodon_data_whole[row['key']] + row["value"]
-#
-#     for key, value in mastodon_data_whole.items():
-#         new_dic = {
-#             key:value
-#         }
-#         results.append(new_dic)
-#
-#
-#     # Return the results as JSON
-#     return jsonify(results)
+#最后一个情景，做柱状图或者饼图随你
+@app.route("/api/mastodon_health_care")
+def mastodon_health_care_data():
+    view = get_view('mastodon_au_social_final_with_emotion',
+                    'healthCount/health_emotion', 1)
+
+    view2 = get_view("mastodon_au_final_with_emotion",
+                     'Healthcare/Healthcare_emotion', 1)
+
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
+    results = []
+
+    mastodon_data_whole = {
+        "Negative": 0,
+        "Positive": 0,
+        "Neutral": 0
+    }
+
+    for row in view:
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
+
+    for row in view2:
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
+
+    for key, value in mastodon_data_whole.items():
+        new_dic = {
+            key: value
+        }
+        results.append(new_dic)
+
+
+    # Return the results as JSON
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
