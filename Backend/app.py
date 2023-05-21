@@ -7,7 +7,44 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
+hosts = []
+with open('host_config.txt', 'r') as f:
+    for line in f:
+        hosts.append(line.strip())
+
+
+def get_database(database):
+    for host in hosts:
+        couch = couchdb.Server(host)
+        try:
+            target_database = couch[database]
+            print("host:" + host + "had already connected")
+            return target_database
+        except:
+            continue
+
+def get_view(database, path_view, level):
+    for host in hosts:
+        couch = couchdb.Server(host)
+        try:
+            target_database = couch[database]
+            target_view = target_database.view(path_view, group_level = level)
+            print("host:" + host + "had already connected")
+            return target_view
+        except:
+            continue
+
+# def get_view(database, path_view):
+#     for host in hosts:
+#         couch = couchdb.Server(host)
+#         try:
+#             target_database = couch[database]
+#             target_view = target_database.view(path_view)
+#             return target_view
+#         except:
+#             continue
+
+# couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
 
 
 @app.route('/')
@@ -34,7 +71,8 @@ def root():
 @app.route('/api/sudo_data_death_pie')
 def sudo_data_death_pie():
 
-    db_sudo_pie = couch['sudo_data_death']
+    db_sudo_pie = get_database('sudo_data_death')
+    print("get pie")
 
     # Mango Queries
     query = {
@@ -43,35 +81,40 @@ def sudo_data_death_pie():
 
     results = []
     for row in db_sudo_pie.find(query):
+        print(row)
         results.append(row)
     # Return the results as JSON
-    return results
+    print(results)
+    return jsonify(results)
 
 # emotion related data get
 @app.route('/api/general_map')
 def general_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state']
-    # View Check
-    view = db_emo.view('regionCount/regionCount', group_level=1)
-    # Execute the query
+    # db_emo = get_database('huge_twitter_update_emotion_state')
+    # # View Check
+    # view = db_emo.view('regionCount/regionCount', group_level=1)
+    # # Execute the query
+    view = get_view('huge_twitter_update_emotion_state', 'regionCount/regionCount', 1)
 
     results = []
-    for row in view:
-        new_row = {
-            "name": row["key"],
-            "value": row["value"]
-        }
-        results.append(new_row)
+
+    if view is not None:
+        for row in view:
+            new_row = {
+                "name": row["key"],
+                "value": row["value"]
+            }
+            results.append(new_row)
 
     # Return the results as JSON
-    return results
+    return jsonify(results)
 
 # sudo cancer data bar get
 @app.route('/api/sudo_data_cancer')
 def sudo_data_cancer():
 
-    db_sudo_bar = couch['sudo_data']
+    db_sudo_bar = get_database('sudo_data')
     # Mango Queries
     query = {
         "selector": {}
@@ -101,10 +144,11 @@ def sudo_data_cancer():
 @app.route('/api/cancer_map')
 def cancer_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state']
-    # View Check
-    view = db_emo.view('cancerCount/cancerCount', group_level=1)
-    # Execute the query
+    # db_emo = get_database('huge_twitter_update_emotion_state')
+    # # View Check
+    # view = db_emo.view('cancerCount/cancerCount', group_level=1)
+    # # Execute the query
+    view = get_view('huge_twitter_update_emotion_state', 'cancerCount/cancerCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -116,16 +160,17 @@ def cancer_map():
         results.append(new_row)
 
     # Return the results as JSON
-    return results
+    return jsonify(results)
 
 # car accident related data get
 @app.route('/api/car_accident_map')
 def car_accident_map():
 
-    db_emo = couch['huge_twitter_update_emotion_state']
-    # View Check
-    view = db_emo.view('carAccidentCount/carAccidentCount', group_level=1)
-    # Execute the query
+    # db_emo = get_database('huge_twitter_update_emotion_state')
+    # # View Check
+    # view = db_emo.view('carAccidentCount/carAccidentCount', group_level=1)
+    # # Execute the query
+    view = get_view('huge_twitter_update_emotion_state', 'cancerCount/cancerCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -137,28 +182,32 @@ def car_accident_map():
         results.append(new_row)
 
     # Return the results as JSON
-    return results
+
+    return jsonify(results)
 
 # emotion related data get
 @app.route('/api/emotion_count')
 def emotion_count():
 
-    db_emo = couch['huge_twitter_update_emotion_state']
-    # View Check
-    view = db_emo.view('emotionCount/emotionCount', group_level=1)
-    # Execute the query
+    # db_emo = get_database('huge_twitter_update_emotion_state')
+    # # View Check
+    # view = db_emo.view('emotionCount/emotionCount', group_level=1)
+    # # Execute the query
+    view = get_view('huge_twitter_update_emotion_state', 'emotionCount/emotionCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
-    results = []
+    results = {}
+    count = 0
     for row in view:
         new_row = {
             "name": row["key"],
             "value": row["value"]
         }
-        results.append(new_row)
+        results[count] = new_row
+        count += 1
 
     # Return the results as JSON
-    return results
+    return jsonify(results)
 
 
 if __name__ == '__main__':

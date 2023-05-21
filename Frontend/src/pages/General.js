@@ -17,9 +17,9 @@ const General = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseMap = await fetch('http://172.26.132.174:8080/api/cancer_map');
-                const jsonMapData = await responseMap.json();
-                setMapData(jsonMapData);
+                // const responseMap = await fetch('http://172.26.132.174:8080/api/cancer_map');
+                // const jsonMapData = await responseMap.json();
+                // setMapData(jsonMapData);
 
                 const responsePie = await fetch('http://172.26.132.174:8080/api/sudo_data_death_pie');
                 let jsonPieData = await responsePie.json();
@@ -122,7 +122,7 @@ const General = () => {
                                     style={{ marginTop: '20px', width: '100%', height: '500px' }}>
                                 </div>
 
-                                <Map dataPoints={mapData} />
+                                {/* <Map dataPoints={mapData} /> */}
                             </>
                         )}
                     </div>
