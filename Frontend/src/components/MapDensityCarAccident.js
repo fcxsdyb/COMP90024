@@ -10,7 +10,7 @@ echarts.use(
     [TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent, MapChart, SVGRenderer]
 );
 
-function DensityMap({ mapData }) {
+function MapDensityCarAccident({ mapData }) {
     const [option, setOption] = useState(null);
 
     useEffect(() => {
@@ -84,4 +84,4 @@ function DensityMap({ mapData }) {
     );
 }
 
-export default DensityMap;
+export default MapDensityCarAccident;

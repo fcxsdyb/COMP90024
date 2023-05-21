@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import MapDensity from '../components/MapDensity';
+import MapDensityCarAccident from '../components/MapDensityCarAccident';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 
@@ -66,7 +66,7 @@ const Scenario3 = () => {
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <MapDensity />
+                            <MapDensityCarAccident />
                         )}
                     </div>
 
