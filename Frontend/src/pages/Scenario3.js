@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import MapDensityCarAccident from '../components/MapDensityCarAccident';
-import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
@@ -56,7 +55,7 @@ const Scenario3 = () => {
                 text="Tell a Story"
                 textStyle="hero-text-mid"
             />
-            
+
             <Layout>
 
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>

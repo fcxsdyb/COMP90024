@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import MapDensityCancer from '../components/MapDensityCancer';
-import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';

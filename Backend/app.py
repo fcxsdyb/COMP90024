@@ -232,7 +232,7 @@ def car_accident_map():
     # view = db_emo.view('carAccidentCount/carAccidentCount', group_level=1)
     # # Execute the query
     view = get_view('huge_twitter_update_emotion_state',
-                    'cancerCount/cancerCount', 1)
+                    'carAccidentCount/carAccidentCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []

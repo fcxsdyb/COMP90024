@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
-import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 import Map from '../components/Map';
 import Navbar from '../components/Navbar';
@@ -21,7 +20,7 @@ const General = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseMap = await fetch('http://172.26.132.174:8080/api/general_group');
+                const responseMap = await fetch('http://172.26.132.174:8080/api/general_map');
                 const jsonMapData = await responseMap.json();
                 setMapData(jsonMapData);
 

@@ -30,9 +30,9 @@ const Map = ({ dataPoints }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {dataPoints.map((point, index) => (
-                <Marker key={index} position={[point.lat, point.lng]}>
+                <Marker key={index} position={[point.name[2], point.name[1]]}>
                     <Popup>
-                        {point.position}: {point.count}
+                        {point.name[0]}: {point.value}
                     </Popup>
                 </Marker>
             ))}
