@@ -341,7 +341,33 @@ def health_evaluation():
     # view = db_emo.view('emotionCount/emotionCount', group_level=1)
     # # Execute the query
     view = get_view('huge_twitter_update_emotion_state',
-                    'Healthcare/Healthcare', 1)
+                    'Healthcare/Healthcare_whole', 1)
+
+    view2 = get_view('huge_twitter_update_emotion_state',
+                    'Healthcare/Healthcare_negative', 1)
+
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
+    results = []
+
+    dict_state_whole = {}
+    for row in view:
+        dict_state_whole[row["key"]] = row["value"]
+
+    for row in view2:
+        new_row = {
+            "name": row["key"],
+            "value": row["value"]/dict_state_whole[row["key"]]
+        }
+        results.append(new_row)
+
+    # Return the results as JSON
+    return jsonify(results)
+
+@app.route("/api/mastodon_suicide")
+def mastodon_suicide_data():
+    view = get_view('mastodon_au_social_final_with_emotion',
+                    'suicide_mastodon/suicide_emotion', 1)
+    print(view)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -351,7 +377,6 @@ def health_evaluation():
 
     # Return the results as JSON
     return jsonify(results)
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
