@@ -10,7 +10,7 @@ echarts.use(
     [TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent, MapChart, SVGRenderer]
 );
 
-function MapDensitySuicide({ mapData }) {
+function MapDensityHealth({ mapData }) {
     const [option, setOption] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ function MapDensitySuicide({ mapData }) {
 
         setOption({
             title: {
-                text: 'Suicide-related tweets expressing negative sentiment in different Australian states (2022)',
+                text: 'Healthcare-related tweets expressing negative sentiment in different Australian states (2022)',
                 subtext: 'Data from Twitter Corpus',
                 sublink: 'https://twitter.com/',
                 left: 'right'
@@ -30,8 +30,8 @@ function MapDensitySuicide({ mapData }) {
             },
             visualMap: {
                 left: 'right',
-                min: 0.13,
-                max: 0.14,
+                min: 0.15,
+                max: 0.24,
                 inRange: {
                     color: [
                         '#313695',
@@ -84,4 +84,4 @@ function MapDensitySuicide({ mapData }) {
     );
 }
 
-export default MapDensitySuicide;
+export default MapDensityHealth;
