@@ -8,11 +8,11 @@ import re
 from textblob import TextBlob
 
 # connect to the couchdb
-admin = 'Bob'
-password = 'CCCansible48'
+admin = 'cccadmin'
+password = 'whysohard24!'
 
 # send request to couchdb
-url = f'http://{admin}:{password}@127.0.0.1:5984/'
+url = f'http://{admin}:{password}@172.26.135.17:5984/'
 couch = couchdb.Server(url)
 
 # create a couchdb database called 'mastodon_au_final', if the database exists,just find that database. If not, just creat the database.
