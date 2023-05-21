@@ -18,9 +18,9 @@ function MapDensityCarAccident({ mapData }) {
 
         setOption({
             title: {
-                text: 'Australia Population Estimates (2023)',
-                subtext: 'Data from www.abs.gov.au',
-                sublink: 'https://www.abs.gov.au',
+                text: 'Car Accident Concern by State in Australia (2022)',
+                subtext: 'Data from Twitter Corpus',
+                sublink: 'https://twitter.com/',
                 left: 'right'
             },
             tooltip: {
@@ -30,8 +30,8 @@ function MapDensityCarAccident({ mapData }) {
             },
             visualMap: {
                 left: 'right',
-                min: 5,
-                max: 1000,
+                min: 1,
+                max: 30,
                 inRange: {
                     color: [
                         '#313695',
@@ -62,7 +62,7 @@ function MapDensityCarAccident({ mapData }) {
             },
             series: [
                 {
-                    name: 'AUS PopEstimates',
+                    name: 'Tweets',
                     type: 'map',
                     roam: true,
                     map: 'AUS',

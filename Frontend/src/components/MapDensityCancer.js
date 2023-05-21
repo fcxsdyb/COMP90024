@@ -62,7 +62,7 @@ function MapDensityCancer({ mapData }) {
             },
             series: [
                 {
-                    name: 'Specific data on cancer of concern by state in Australia',
+                    name: 'Tweets',
                     type: 'map',
                     roam: true,
                     map: 'AUS',

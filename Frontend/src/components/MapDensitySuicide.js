@@ -18,9 +18,9 @@ function MapDensitySuicide({ mapData }) {
 
         setOption({
             title: {
-                text: 'Australia Population Estimates (2023)',
-                subtext: 'Data from www.abs.gov.au',
-                sublink: 'https://www.abs.gov.au',
+                text: 'Specific data on suicide of concern by state in Australia',
+                subtext: 'Data from Twitter Corpus',
+                sublink: 'https://twitter.com/',
                 left: 'right'
             },
             tooltip: {
@@ -62,7 +62,7 @@ function MapDensitySuicide({ mapData }) {
             },
             series: [
                 {
-                    name: 'AUS PopEstimates',
+                    name: 'Tweets',
                     type: 'map',
                     roam: true,
                     map: 'AUS',

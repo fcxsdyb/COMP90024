@@ -5,8 +5,12 @@ import * as echarts from 'echarts';
 import MapDensityCancer from '../components/MapDensityCancer';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
+import Navbar from '../components/Navbar';
+import MainPic from '../components/MainPic';
+import CancerPic from '../assets/cancer.jpeg'
+import Footer from '../components/Footer';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Scenario1 = () => {
 
@@ -78,12 +82,19 @@ const Scenario1 = () => {
     }, [chartRef, barData]);
 
     return (
-        <Layout>
-            <Sider width={200} style={{ overflow: "auto" }}>
-                <DIYMenu />
-            </Sider>
+        <>
+            <Navbar />
+
+            <MainPic
+                cName="hero-mid"
+                heroImg={CancerPic}
+                title="Cancer"
+                text="Tell a Story"
+                textStyle="hero-text-mid"
+            />
 
             <Layout>
+
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
                         <Title>Comparison of Cancer Attention and Real Death Toll</Title>
@@ -107,7 +118,9 @@ const Scenario1 = () => {
                     </div>
                 </Content>
             </Layout>
-        </Layout>
+            
+            <Footer />
+        </>
     );
 };
 

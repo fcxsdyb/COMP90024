@@ -5,8 +5,12 @@ import * as echarts from 'echarts';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
 import Map from '../components/Map';
+import Navbar from '../components/Navbar';
+import MainPic from '../components/MainPic';
+import GeneralPic from '../assets/general.png'
+import Footer from '../components/Footer';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const General = () => {
 
@@ -103,11 +107,15 @@ const General = () => {
     }, [pieChartRef, pieData]);
 
     return (
-        <Layout>
-            <Sider width={200} style={{ overflow: "auto" }}>
-                <DIYMenu />
-            </Sider>
-
+        <>
+            <Navbar />
+            <MainPic
+                cName="hero-mid"
+                heroImg={GeneralPic}
+                title="General"
+                text="Tell a Story"
+                textStyle="hero-text-mid"
+            />
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
@@ -134,7 +142,8 @@ const General = () => {
                     </div>
                 </Content>
             </Layout>
-        </Layout>
+            <Footer />
+        </>
     );
 };
 

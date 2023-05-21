@@ -4,8 +4,12 @@ import { Layout, Button } from 'antd';
 import MapDensitySuicide from '../components/MapDensitySuicide';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
+import Navbar from '../components/Navbar';
+import MainPic from '../components/MainPic';
+import SuicidePic from '../assets/suicide.jpeg'
+import Footer from '../components/Footer';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Scenario2 = () => {
 
@@ -34,10 +38,16 @@ const Scenario2 = () => {
     };
 
     return (
-        <Layout>
-            <Sider width={200} style={{ overflow: "auto" }}>
-                <DIYMenu />
-            </Sider>
+        <>
+            <Navbar />
+
+            <MainPic
+                cName="hero-mid"
+                heroImg={SuicidePic}
+                title="Suicide"
+                text="Tell a Story"
+                textStyle="hero-text-mid"
+            />
 
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
@@ -58,7 +68,9 @@ const Scenario2 = () => {
                     </div>
                 </Content>
             </Layout>
-        </Layout>
+
+            <Footer />
+        </>
     );
 };
 
