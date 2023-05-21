@@ -196,15 +196,15 @@ def emotion_count():
     view = get_view('huge_twitter_update_emotion_state', 'emotionCount/emotionCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
-    results = {}
-    count = 0
+    results = []
+
     for row in view:
         new_row = {
             "name": row["key"],
             "value": row["value"]
         }
-        results[count] = new_row
-        count += 1
+        results.append(new_row)
+
 
     # Return the results as JSON
     return jsonify(results)
