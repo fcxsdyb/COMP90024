@@ -216,7 +216,39 @@ def car_accident_map():
 
     return jsonify(results)
 
-# emotion related data get
+# car accident related data get (scenario2 sudo data)
+# 得到的json数据是八个洲的自杀的人数, 通过柱状图显示八个洲自杀人数的信息
+# list类型
+# [{"state":"SA","suicide":1038},
+# {"state":"ACT","suicide":193},
+# {"state":"QLD","suicide":3433},
+# {"state":"NSW","suicide":3328},
+# {"state":"NT","suicide":731},
+# {"state":"WA","suicide":236},
+# {"state":"TAS","suicide":645},
+# {"state":"VIC","suicide":361}]
+
+
+@app.route('/api/sudo_suicide')
+def sudo_data_suicide():
+    db_sudo_car_accident = get_database('sudo_data')
+    query = {
+        "selector": {
+            "suicide_and_self-inflicted_injuries_death": {"$exists": True}
+        }
+    }
+
+    result = []
+    for row in db_sudo_car_accident.find(query):
+        new_dic = {}
+        new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"]
+        new_dic["state"] = row["state"]
+        result.append(new_dic)
+
+
+    return jsonify(result)
+
+# emotion related data get (sui)
 @app.route('/api/emotion_count')
 def emotion_count():
 
