@@ -26,6 +26,19 @@ whole_people_state = {
     "TAS": 531500,
 }
 
+
+
+state_short_to_long = {
+    "NSW": "New South Wales",
+    "VIC": "Victoria",
+    "QLD": "Queensland",
+    "SA": "South Australia",
+    "WA": "Western Australia",
+    "TAS": "Tasmania",
+    "NT": "Northern Territory",
+    "ACT": "Australian Capital Territory"
+}
+
 hosts = []
 with open('host_config.txt', 'r') as f:
     for line in f:
@@ -204,7 +217,7 @@ def sudo_data_car_accident():
         new_dic = {}
         new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"] / \
             whole_people_state[row["state"]]
-        new_dic["state"] = row["state"]
+        new_dic["state"] = state_short_to_long[row["state"]]
         result.append(new_dic)
 
     return jsonify(result)
@@ -260,7 +273,7 @@ def sudo_data_suicide():
         new_dic = {}
         new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"] / \
             whole_people_state[row['state']]
-        new_dic["state"] = row["state"]
+        new_dic["state"] = state_short_to_long[row["state"]]
         result.append(new_dic)
 
     return jsonify(result)
@@ -288,6 +301,31 @@ def emotion_count():
 
     # Return the results as JSON
     return jsonify(results)
+
+
+
+@app.route('/api/sudo_health_evaluation')
+def sudo_data_health_evaluation():
+    db_sudo_car_accident = get_database('sudo_data_health_care')
+    query = {
+        "selector": {
+            "average_nov_16": {"$exists": True}
+        }
+    }
+
+
+    result = []
+    for row in db_sudo_car_accident.find(query):
+        print(row)
+        new_dic = {}
+        new_dic["average_nov_16"] = row["average_nov_16"]
+        new_dic["average_nov_21"] = row["average_nov_21"]
+        new_dic["average_nov_20"] = row["average_nov_20"]
+        new_dic["state"] = state_short_to_long[row["state"]]
+        result.append(new_dic)
+
+
+    return jsonify(result)
 
 
 if __name__ == '__main__':
