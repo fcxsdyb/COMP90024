@@ -288,6 +288,14 @@ def emotion_count():
     # # Execute the query
     view = get_view('huge_twitter_update_emotion_state',
                     'emotionCount/emotionCount', 1)
+    view2 = get_view('huge_twitter_update_emotion_state',
+                    'emotionCount/count_state_emotion', 1)
+
+    dict_state_whole = {}
+    for row in view2:
+        dict_state_whole[row["key"]] = row["value"]
+
+    print(dict_state_whole)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -295,7 +303,7 @@ def emotion_count():
     for row in view:
         new_row = {
             "name": row["key"],
-            "value": row["value"]
+            "value": row["value"]/dict_state_whole[row["key"]]
         }
         results.append(new_row)
 
