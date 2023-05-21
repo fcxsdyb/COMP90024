@@ -327,6 +327,25 @@ def sudo_data_health_evaluation():
 
     return jsonify(result)
 
+@app.route('/api/health_evaluation_map')
+def health_evaluation():
+
+    # db_emo = get_database('huge_twitter_update_emotion_state')
+    # # View Check
+    # view = db_emo.view('emotionCount/emotionCount', group_level=1)
+    # # Execute the query
+    view = get_view('huge_twitter_update_emotion_state',
+                    'Healthcare/Healthcare', 1)
+
+    # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
+    results = []
+
+    for row in view:
+        print(row)
+
+    # Return the results as JSON
+    return jsonify(results)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='8080')
