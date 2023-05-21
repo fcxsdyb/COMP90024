@@ -16,7 +16,7 @@ url = f'http://{admin}:{password}@172.26.135.17:5984/'
 couch = couchdb.Server(url)
 
 # create a couchdb database called 'mastodon_au_final', if the database exists,just find that database. If not, just creat the database.
-db_name = 'mastodon_au_final'
+db_name = 'mastodon_au_final_with_emotion'
 if db_name not in couch:
     db = couch.create(db_name)
 else:
