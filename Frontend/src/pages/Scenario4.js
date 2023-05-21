@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import LineChart from '../components/LineHealth'
 import MapDensityHealth from '../components/MapDensityHealth'
-import Title from 'antd/es/typography/Title';
+import HealthPieMastodon from '../components/HealthPieMastodon'
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
 import HospitalPic from '../assets/hospital.avif'
@@ -15,6 +15,7 @@ const Scenario4 = () => {
 
     const [lineData, setLineData] = useState([]);
     const [mapData, setMapData] = useState([]);
+    const [pieData, setPieData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -38,6 +39,15 @@ const Scenario4 = () => {
             const responseMap = await fetch('http://172.26.132.174:8080/api/health_evaluation_map');
             const jsonMapData = await responseMap.json();
             setMapData(jsonMapData);
+
+            const responsePie = await fetch('http://172.26.132.174:8080/api/mastodon_health_care');
+            const jsonPieData = await responsePie.json();
+            const pieDataFormat = jsonPieData.map(item => {
+                const name = Object.keys(item)[0]; // Get the key
+                const value = item[name]; // Get the value using the key
+                return { name, value };
+            });
+            setPieData(pieDataFormat);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -60,22 +70,23 @@ const Scenario4 = () => {
                 cName="hero-mid"
                 heroImg={HospitalPic}
                 title="Hospital"
-                text="Tell a Story"
                 textStyle="hero-text-mid"
             />
 
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Health Care and Real Death Toll</Title>
-
-                        <LineChart lineData={lineData}/>
+                        <h1>Comparison of Health Care and Real Death Toll</h1>
+                        <LineChart lineData={lineData} />
 
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
                             <MapDensityHealth mapData={mapData} />
                         )}
+
+                        <h1>Mastodon Healthcare Related Sentiment Analysis</h1>
+                        <HealthPieMastodon data={pieData} />
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>

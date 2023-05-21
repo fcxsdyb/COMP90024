@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import MapDensitySuicide from '../components/MapDensitySuicide';
 import BarSuicide from '../components/BarSuicide'
-import Title from 'antd/es/typography/Title';
+import PieMastodon from '../components/PieMastodon'
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
 import SuicidePic from '../assets/suicide.jpeg'
@@ -15,6 +15,7 @@ const Scenario2 = () => {
 
     const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
+    const [pieData, setPieData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,6 +31,15 @@ const Scenario2 = () => {
             const response = await fetch('http://172.26.132.174:8080/api/emotion_count');
             const jsonData = await response.json();
             setMapData(jsonData);
+
+            const responsePie = await fetch('http://172.26.132.174:8080/api/mastodon_suicide');
+            const jsonPieData = await responsePie.json();
+            const pieDataFormat = jsonPieData.map(item => {
+                const name = Object.keys(item)[0]; // Get the key
+                const value = item[name]; // Get the value using the key
+                return { name, value };
+            });
+            setPieData(pieDataFormat);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -50,22 +60,23 @@ const Scenario2 = () => {
                 cName="hero-mid"
                 heroImg={SuicidePic}
                 title="Suicide"
-                text="Tell a Story"
                 textStyle="hero-text-mid"
             />
 
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
-                    <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Suicide Attention and Real Death Toll</Title>
-
-                        <BarSuicide data={barData}/>
+                    <div className="data-analysis" style={{ marginTop: '20px', textAlign: 'center' }}>
+                        <h1>Comparison of Suicide Attention and Real Death Toll</h1>
+                        <BarSuicide data={barData} />
 
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <MapDensitySuicide mapData={mapData}/>
+                            <MapDensitySuicide mapData={mapData} />
                         )}
+
+                        <h1>Mastodon Sentiment Analysis</h1>
+                        <PieMastodon data={pieData} />
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>

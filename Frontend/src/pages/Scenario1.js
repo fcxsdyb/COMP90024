@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import MapDensityCancer from '../components/MapDensityCancer';
-import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
 import CancerPic from '../assets/cancer.jpeg'
@@ -88,15 +87,13 @@ const Scenario1 = () => {
                 cName="hero-mid"
                 heroImg={CancerPic}
                 title="Cancer"
-                text="Tell a Story"
                 textStyle="hero-text-mid"
             />
 
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Cancer Attention and Real Death Toll</Title>
-
+                        <h1>The number of deaths caused by different types of cancer in Australia</h1>
                         <div
                             ref={chartRef}
                             style={{ margin: '30px', width: '100%', height: '400px', textAlign: 'center' }}>

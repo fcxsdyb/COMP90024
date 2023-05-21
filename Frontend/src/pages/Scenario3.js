@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import MapDensityCarAccident from '../components/MapDensityCarAccident';
 import BarCarAccident from '../components/BarCarAccident'
-import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
 import CarAccidentPic from '../assets/caraccident.jpeg'
@@ -50,14 +49,13 @@ const Scenario3 = () => {
                 cName="hero-mid"
                 heroImg={CarAccidentPic}
                 title="Car Accident"
-                text="Tell a Story"
                 textStyle="hero-text-mid"
             />
 
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Car Accident and Real Death Toll</Title>
+                        <h1>Comparison of Car Accident and Real Death Toll</h1>
 
                         <BarCarAccident data={barData}/>
 

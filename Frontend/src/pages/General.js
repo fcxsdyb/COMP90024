@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
-import Title from 'antd/es/typography/Title';
 import Map from '../components/Map';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
@@ -118,19 +117,15 @@ const General = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>General</Title>
+                        <div
+                            ref={pieChartRef}
+                            style={{ marginTop: '20px', width: '100%', height: '500px' }}>
+                        </div>
 
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <>
-                                <div
-                                    ref={pieChartRef}
-                                    style={{ marginTop: '20px', width: '100%', height: '500px' }}>
-                                </div>
-
-                                <Map dataPoints={mapData} />
-                            </>
+                            <Map dataPoints={mapData} />
                         )}
                     </div>
 
