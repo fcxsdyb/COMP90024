@@ -4,8 +4,12 @@ import { Layout, Button } from 'antd';
 import * as echarts from 'echarts';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
+import Navbar from '../components/Navbar';
+import MainPic from '../components/MainPic';
+import HospitalPic from '../assets/hospital.avif'
+import Footer from '../components/Footer';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Scenario4 = () => {
 
@@ -82,10 +86,16 @@ const Scenario4 = () => {
     }, [chartRef, barData]);
 
     return (
-        <Layout>
-            <Sider width={200} style={{ overflow: "auto" }}>
-                <DIYMenu />
-            </Sider>
+        <>
+            <Navbar />
+
+            <MainPic
+                cName="hero-mid"
+                heroImg={HospitalPic}
+                title="Hospital"
+                text="Tell a Story"
+                textStyle="hero-text-mid"
+            />
 
             <Layout>
                 <Content style={{
@@ -94,7 +104,7 @@ const Scenario4 = () => {
                     margin: 'auto'
                 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Suicide Attention and Real Death Toll</Title>
+                        <Title>Comparison of Hospital Attention and Real Death Toll</Title>
                     </div>
 
                     <div
@@ -106,13 +116,15 @@ const Scenario4 = () => {
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                        <Button type="primary" onClick={handleGoBack} style={{ width: '20%', textAlign: 'center' }}>
+                        <Button type="primary" onClick={handleGoBack} style={{ width: '22%', textAlign: 'center' }}>
                             Go Back to Homepage
                         </Button>
                     </div>
                 </Content>
             </Layout>
-        </Layout>
+
+            <Footer />
+        </>
     );
 };
 

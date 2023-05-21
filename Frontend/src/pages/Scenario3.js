@@ -5,8 +5,12 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import MapDensityCarAccident from '../components/MapDensityCarAccident';
 import DIYMenu from '../components/DIYMenu';
 import Title from 'antd/es/typography/Title';
+import Navbar from '../components/Navbar';
+import MainPic from '../components/MainPic';
+import CarAccidentPic from '../assets/caraccident.jpeg'
+import Footer from '../components/Footer';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 
 const Scenario3 = () => {
 
@@ -19,7 +23,7 @@ const Scenario3 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://172.26.132.174:8080/api/diabetes_map');
+            const response = await fetch('http://172.26.132.174:8080/api/car_accident_map');
             const jsonData = await response.json();
             setMapData(jsonData);
             setLoading(false);
@@ -42,12 +46,19 @@ const Scenario3 = () => {
     };
 
     return (
-        <Layout>
-            <Sider width={200} style={{ overflow: "auto" }}>
-                <DIYMenu />
-            </Sider>
+        <>
+            <Navbar />
 
+            <MainPic
+                cName="hero-mid"
+                heroImg={CarAccidentPic}
+                title="Car Accident"
+                text="Tell a Story"
+                textStyle="hero-text-mid"
+            />
+            
             <Layout>
+
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
                         <Title>Comparison of Car Accident and Real Death Toll</Title>
@@ -66,7 +77,7 @@ const Scenario3 = () => {
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <MapDensityCarAccident />
+                            <MapDensityCarAccident mapData={mapData} />
                         )}
                     </div>
 
@@ -76,8 +87,11 @@ const Scenario3 = () => {
                         </Button>
                     </div>
                 </Content>
+
             </Layout>
-        </Layout>
+
+            <Footer />
+        </>
     );
 };
 
