@@ -111,7 +111,6 @@ const General = () => {
                 cName="hero-mid"
                 heroImg={GeneralPic}
                 title="General"
-                text="Tell a Story"
                 textStyle="hero-text-mid"
             />
             <Layout>

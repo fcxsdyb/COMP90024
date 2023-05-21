@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
-import HomePagePic from '../assets/Homepage.png'
+import HomePagePic from '../assets/homepage.avif'
 
 const HomePage = () => {
     return (

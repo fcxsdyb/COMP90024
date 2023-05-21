@@ -5,7 +5,7 @@ import MapDensityCarAccident from '../components/MapDensityCarAccident';
 import BarCarAccident from '../components/BarCarAccident'
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
-import CarAccidentPic from '../assets/caraccident.jpeg'
+import CarAccidentPic from '../assets/caraccident.avif'
 import Footer from '../components/Footer';
 
 const { Content } = Layout;
@@ -55,8 +55,7 @@ const Scenario3 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <h1>Comparison of Car Accident and Real Death Toll</h1>
-
+                        <h1>Death Ratio Caused by Car Accident for each State in Australia</h1>
                         <BarCarAccident data={barData}/>
 
                         {loading ? (

@@ -3,9 +3,6 @@ import ReactECharts from 'echarts-for-react';
 
 const LineChart = ({ lineData }) => {
     const getOption = () => ({
-        title: {
-            text: 'Stacked Line'
-        },
         tooltip: {
             trigger: 'axis'
         },

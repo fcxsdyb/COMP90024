@@ -30,7 +30,6 @@ const Scenario4 = () => {
             const data = jsonData.map(item => ({
                 name: item.state,
                 type: 'line',
-                stack: 'Total',
                 data: [item.average_nov_16, item.average_nov_20, item.average_nov_21]
             }));
 
@@ -76,7 +75,7 @@ const Scenario4 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <h1>Comparison of Health Care and Real Death Toll</h1>
+                        <h1>Average Healthcare Employment Per City in each State in Australia</h1>
                         <LineChart lineData={lineData} />
 
                         {loading ? (

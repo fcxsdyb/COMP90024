@@ -66,7 +66,7 @@ const Scenario2 = () => {
             <Layout>
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ marginTop: '20px', textAlign: 'center' }}>
-                        <h1>Comparison of Suicide Attention and Real Death Toll</h1>
+                        <h1>Death Ratio Caused by Suicide for each State in Australia</h1>
                         <BarSuicide data={barData} />
 
                         {loading ? (
