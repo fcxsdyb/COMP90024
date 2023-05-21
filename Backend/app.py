@@ -7,6 +7,26 @@ import json
 app = Flask(__name__)
 CORS(app)
 
+# [{"road_traffic_injuries_death":382,"state":"SA"},
+# {"road_traffic_injuries_death":52,"state":"ACT"},
+# {"road_traffic_injuries_death":1041,"state":"QLD"},
+# {"road_traffic_injuries_death":1129,"state":"NSW"},
+# {"road_traffic_injuries_death":232,"state":"NT"},
+# {"road_traffic_injuries_death":174,"state":"WA"},
+# {"road_traffic_injuries_death":185,"state":"TAS"},
+# {"road_traffic_injuries_death":124,"state":"VIC"}]
+whole_people_state = {
+"NSW": 8046100,
+"VIC": 6526400,
+"QLD" : 5052800,
+"SA": 1742700,
+"WA": 2606300,
+"NT" : 245900,
+"ACT": 423800,
+"TAS": 531500,
+
+}
+
 hosts = []
 with open('host_config.txt', 'r') as f:
     for line in f:
@@ -94,7 +114,7 @@ def general_map():
     # # View Check
     # view = db_emo.view('regionCount/regionCount', group_level=1)
     # # Execute the query
-    view = get_view('huge_twitter_update_emotion_state', 'regionCount/regionCount', 1)
+    view = get_view('huge_twitter_update_emotion_state', 'regionCount/regionCount', 2)
 
     results = []
 
@@ -184,7 +204,7 @@ def sudo_data_car_accident():
     result = []
     for row in db_sudo_car_accident.find(query):
         new_dic = {}
-        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"]
+        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"]/whole_people_state[row["state"]]
         new_dic["state"] = row["state"]
         result.append(new_dic)
 
@@ -241,7 +261,7 @@ def sudo_data_suicide():
     result = []
     for row in db_sudo_car_accident.find(query):
         new_dic = {}
-        new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"]
+        new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"]/whole_people_state[row['state']]
         new_dic["state"] = row["state"]
         result.append(new_dic)
 
