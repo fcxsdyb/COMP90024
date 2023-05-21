@@ -16,22 +16,20 @@ CORS(app)
 # {"road_traffic_injuries_death":185,"state":"TAS"},
 # {"road_traffic_injuries_death":124,"state":"VIC"}]
 whole_people_state = {
-"NSW": 8046100,
-"VIC": 6526400,
-"QLD" : 5052800,
-"SA": 1742700,
-"WA": 2606300,
-"NT" : 245900,
-"ACT": 423800,
-"TAS": 531500,
-
+    "NSW": 8046100,
+    "VIC": 6526400,
+    "QLD": 5052800,
+    "SA": 1742700,
+    "WA": 2606300,
+    "NT": 245900,
+    "ACT": 423800,
+    "TAS": 531500,
 }
 
 hosts = []
 with open('host_config.txt', 'r') as f:
     for line in f:
         hosts.append(line.strip())
-
 
 def get_database(database):
     for host in hosts:
@@ -48,7 +46,7 @@ def get_view(database, path_view, level):
         couch = couchdb.Server(host)
         try:
             target_database = couch[database]
-            target_view = target_database.view(path_view, group_level = level)
+            target_view = target_database.view(path_view, group_level=level)
             print("host:" + host + "had already connected")
             return target_view
         except:
@@ -65,8 +63,6 @@ def get_view(database, path_view, level):
 #             continue
 
 # couch = couchdb.Server('http://cccadmin:whysohard24!@172.26.135.17:5984/')
-
-
 @app.route('/')
 def root():
     return render_template('Index.html')
@@ -114,7 +110,8 @@ def general_map():
     # # View Check
     # view = db_emo.view('regionCount/regionCount', group_level=1)
     # # Execute the query
-    view = get_view('huge_twitter_update_emotion_state', 'regionCount/regionCount', 2)
+    view = get_view('huge_twitter_update_emotion_state',
+                    'regionCount/regionCount', 3)
 
     results = []
 
@@ -167,7 +164,8 @@ def cancer_map():
     # # View Check
     # view = db_emo.view('cancerCount/cancerCount', group_level=1)
     # # Execute the query
-    view = get_view('huge_twitter_update_emotion_state', 'cancerCount/cancerCount', 1)
+    view = get_view('huge_twitter_update_emotion_state',
+                    'cancerCount/cancerCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -204,13 +202,12 @@ def sudo_data_car_accident():
     result = []
     for row in db_sudo_car_accident.find(query):
         new_dic = {}
-        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"]/whole_people_state[row["state"]]
+        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"] / \
+            whole_people_state[row["state"]]
         new_dic["state"] = row["state"]
         result.append(new_dic)
 
-
     return jsonify(result)
-
 
 
 # car accident related data get (scenario2 twitter data)
@@ -221,7 +218,8 @@ def car_accident_map():
     # # View Check
     # view = db_emo.view('carAccidentCount/carAccidentCount', group_level=1)
     # # Execute the query
-    view = get_view('huge_twitter_update_emotion_state', 'cancerCount/cancerCount', 1)
+    view = get_view('huge_twitter_update_emotion_state',
+                    'cancerCount/cancerCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -248,7 +246,6 @@ def car_accident_map():
 # {"state":"TAS","suicide":645},
 # {"state":"VIC","suicide":361}]
 
-
 @app.route('/api/sudo_suicide')
 def sudo_data_suicide():
     db_sudo_car_accident = get_database('sudo_data')
@@ -261,10 +258,10 @@ def sudo_data_suicide():
     result = []
     for row in db_sudo_car_accident.find(query):
         new_dic = {}
-        new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"]/whole_people_state[row['state']]
+        new_dic["suicide"] = row["suicide_and_self-inflicted_injuries_death"] / \
+            whole_people_state[row['state']]
         new_dic["state"] = row["state"]
         result.append(new_dic)
-
 
     return jsonify(result)
 
@@ -276,7 +273,8 @@ def emotion_count():
     # # View Check
     # view = db_emo.view('emotionCount/emotionCount', group_level=1)
     # # Execute the query
-    view = get_view('huge_twitter_update_emotion_state', 'emotionCount/emotionCount', 1)
+    view = get_view('huge_twitter_update_emotion_state',
+                    'emotionCount/emotionCount', 1)
 
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
@@ -288,10 +286,8 @@ def emotion_count():
         }
         results.append(new_row)
 
-
     # Return the results as JSON
     return jsonify(results)
-
 
 
 if __name__ == '__main__':

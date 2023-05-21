@@ -94,7 +94,6 @@ const Scenario1 = () => {
             />
 
             <Layout>
-
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
                         <Title>Comparison of Cancer Attention and Real Death Toll</Title>
@@ -118,7 +117,7 @@ const Scenario1 = () => {
                     </div>
                 </Content>
             </Layout>
-            
+
             <Footer />
         </>
     );
