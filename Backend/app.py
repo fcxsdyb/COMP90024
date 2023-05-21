@@ -295,8 +295,6 @@ def emotion_count():
     for row in view2:
         dict_state_whole[row["key"]] = row["value"]
 
-    print(dict_state_whole)
-
     # (10°41) 43°38' south longitudes 113°09' eaand 153°38' east
     results = []
 
