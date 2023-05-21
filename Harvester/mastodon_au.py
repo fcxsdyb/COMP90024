@@ -1,4 +1,3 @@
-
 # need to install couchdb
 import couchdb
 import json
@@ -7,27 +6,30 @@ from mastodon import Mastodon, StreamListener
 import re
 from textblob import TextBlob
 
-# connect to the couchdb
+# couchdb login data
 admin = 'cccadmin'
 password = 'whysohard24!'
 
-# send request to couchdb
+# connect to couchdb
 url = f'http://{admin}:{password}@172.26.135.17:5984/'
 couch = couchdb.Server(url)
 
-# create a couchdb database called 'mastodon_au_final', if the database exists,just find that database. If not, just creat the database.
+# create a couchdb database called 'mastodon_au_final_with emotion'.
 db_name = 'mastodon_au_final_with_emotion'
+
+# if the database exists,just find that database.
+# If not, just creat the database.
 if db_name not in couch:
     db = couch.create(db_name)
 else:
     db = couch[db_name]
 
-#
-# mastodon server connect(with url and token)
+# mastodon message (with url and private token)
 m = Mastodon(
     api_base_url='https://mastodon.au/',
     access_token='AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs'
 )
+
 
 # create listener to load the data
 class Listener(StreamListener):
@@ -38,8 +40,7 @@ class Listener(StreamListener):
             json_element = json.dumps(status, indent=2, sort_keys=True, default=str)
             json_single = json.loads(json_element)
 
-
-            #ignore the http tag in the sentence, to extract the real words in the note.
+            # ignore the http tag in the sentence, to extract the real words in the note.
 
             no_tags_string = re.sub('<.*?>', '', json_single['content'])
 
