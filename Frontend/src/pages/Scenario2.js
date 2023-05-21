@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
 import MapDensitySuicide from '../components/MapDensitySuicide';
+import BarSuicide from '../components/BarSuicide'
 import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
@@ -12,6 +13,7 @@ const { Content } = Layout;
 
 const Scenario2 = () => {
 
+    const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +23,11 @@ const Scenario2 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://172.26.132.174:8080/api/car_accident_map');
+            const responseBar = await fetch('http://172.26.132.174:8080/api/sudo_suicide');
+            const jsonBarData = await responseBar.json();
+            setBarData(jsonBarData);
+
+            const response = await fetch('http://172.26.132.174:8080/api/emotion_count');
             const jsonData = await response.json();
             setMapData(jsonData);
             setLoading(false);
@@ -53,10 +59,12 @@ const Scenario2 = () => {
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
                         <Title>Comparison of Suicide Attention and Real Death Toll</Title>
 
+                        <BarSuicide data={barData}/>
+
                         {loading ? (
                             <p>Loading map data...</p>
                         ) : (
-                            <MapDensitySuicide />
+                            <MapDensitySuicide mapData={mapData}/>
                         )}
                     </div>
 

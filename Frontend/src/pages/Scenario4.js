@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
-import * as echarts from 'echarts';
+import LineChart from '../components/LineHealth'
+import MapDensityHealth from '../components/MapDensityHealth'
 import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
@@ -12,7 +13,8 @@ const { Content } = Layout;
 
 const Scenario4 = () => {
 
-    const [barData, setBarData] = useState([]);
+    const [lineData, setLineData] = useState([]);
+    const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -21,9 +23,21 @@ const Scenario4 = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://172.26.132.174:8080/api/emotion_count');
+            const response = await fetch('http://172.26.132.174:8080/api/sudo_health_evaluation');
             const jsonData = await response.json();
-            setBarData(jsonData);
+
+            const data = jsonData.map(item => ({
+                name: item.state,
+                type: 'line',
+                stack: 'Total',
+                data: [item.average_nov_16, item.average_nov_20, item.average_nov_21]
+            }));
+
+            setLineData(data);
+
+            const responseMap = await fetch('http://172.26.132.174:8080/api/health_evaluation_map');
+            const jsonMapData = await responseMap.json();
+            setMapData(jsonMapData);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -36,53 +50,7 @@ const Scenario4 = () => {
         navigate('/');
     };
 
-    const chartRef = useRef(null);
-
-    useEffect(() => {
-        // Add this inside useEffect
-        if (chartRef.current) {
-            const myChart = echarts.init(chartRef.current);
-            myChart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                },
-                legend: {
-                    top: '5%',
-                    left: 'center',
-                },
-                series: [
-                    {
-                        name: 'Access From',
-                        type: 'pie',
-                        radius: ['45%', '70%'],
-                        avoidLabelOverlap: false,
-                        itemStyle: {
-                            borderRadius: 10,
-                            borderColor: '#fff',
-                            borderWidth: 3,
-                        },
-                        label: {
-                            show: false,
-                            position: 'center',
-                        },
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: 30,
-                                fontWeight: 'bold',
-                            },
-                        },
-                        labelLine: {
-                            show: false,
-                        },
-                        data: barData,
-                    },
-                ],
-            });
-
-            window.addEventListener('resize', myChart.resize);
-        }
-    }, [chartRef, barData]);
+    console.log(lineData)
 
     return (
         <>
@@ -97,25 +65,21 @@ const Scenario4 = () => {
             />
 
             <Layout>
-                <Content style={{
-                    minHeight: 280,
-                    maxWidth: 'calc(100% - 200px)',
-                    margin: 'auto'
-                }}>
+                <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
-                        <Title>Comparison of Hospital Attention and Real Death Toll</Title>
-                    </div>
+                        <Title>Comparison of Health Care and Real Death Toll</Title>
 
-                    <div
-                        ref={chartRef}
-                        style={{
-                            width: '100%',
-                            height: '400px',
-                        }}>
+                        <LineChart lineData={lineData}/>
+
+                        {loading ? (
+                            <p>Loading map data...</p>
+                        ) : (
+                            <MapDensityHealth mapData={mapData} />
+                        )}
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', margin: '20px' }}>
-                        <Button type="primary" onClick={handleGoBack} style={{ width: '22%', textAlign: 'center' }}>
+                        <Button type="primary" onClick={handleGoBack} style={{ width: '15%', textAlign: 'center' }}>
                             Go Back to Homepage
                         </Button>
                     </div>

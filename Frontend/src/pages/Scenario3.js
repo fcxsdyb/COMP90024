@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import MapDensityCarAccident from '../components/MapDensityCarAccident';
+import BarCarAccident from '../components/BarCarAccident'
 import Title from 'antd/es/typography/Title';
 import Navbar from '../components/Navbar';
 import MainPic from '../components/MainPic';
@@ -13,6 +13,7 @@ const { Content } = Layout;
 
 const Scenario3 = () => {
 
+    const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -22,6 +23,10 @@ const Scenario3 = () => {
 
     const fetchData = async () => {
         try {
+            const responseBar = await fetch('http://172.26.132.174:8080/api/sudo_car_accident');
+            const jsonBarData = await responseBar.json();
+            setBarData(jsonBarData);
+
             const response = await fetch('http://172.26.132.174:8080/api/car_accident_map');
             const jsonData = await response.json();
             setMapData(jsonData);
@@ -31,13 +36,6 @@ const Scenario3 = () => {
             setLoading(false);
         }
     };
-
-    const data = [
-        { name: 'A', value: 400 },
-        { name: 'B', value: 300 },
-        { name: 'C', value: 200 },
-        { name: 'D', value: 100 },
-    ];
 
     const navigate = useNavigate();
     const handleGoBack = () => {
@@ -57,21 +55,11 @@ const Scenario3 = () => {
             />
 
             <Layout>
-
                 <Content style={{ padding: '0 24px', minHeight: 280 }}>
                     <div className="data-analysis" style={{ margin: '20px', textAlign: 'center' }}>
                         <Title>Comparison of Car Accident and Real Death Toll</Title>
 
-                        <div className="bar-chart">
-                            <h2>Bar Chart</h2>
-                            <BarChart width={600} height={300} data={data}>
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <Bar dataKey="value" fill="#8884d8" />
-                            </BarChart>
-                        </div>
+                        <BarCarAccident data={barData}/>
 
                         {loading ? (
                             <p>Loading map data...</p>
@@ -86,7 +74,6 @@ const Scenario3 = () => {
                         </Button>
                     </div>
                 </Content>
-
             </Layout>
 
             <Footer />
