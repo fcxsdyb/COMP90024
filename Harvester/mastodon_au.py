@@ -23,7 +23,7 @@ else:
     db = couch[db_name]
 
 #
-# mastodon server connect
+# mastodon server connect(with url and token)
 m = Mastodon(
     api_base_url='https://mastodon.au/',
     access_token='AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs'
@@ -49,12 +49,13 @@ class Listener(StreamListener):
             # Replace HTML entities
             readable_string = no_special_chars_string.replace('&gt;', '>')
 
-            # create a new dictionary to store the capture data
+            # create a new dictionary to store the capture data one by one
             new_store = {}
             new_store['id'] = json_single['account']['id']
             new_store['content'] = readable_string
             new_store['created_at'] = json_single['created_at']
 
+            # Content analysis of user's toots, judge whether the toot is positive, negative or neutral.
             analysis = TextBlob(new_store['content'])
             sentiment = analysis.sentiment.polarity
 
@@ -64,6 +65,8 @@ class Listener(StreamListener):
                 new_store["emotion"] = "Negative"
             else:
                 new_store["emotion"] = "Neutral"
+
+            # if all data preprocess finish, store the data into couchdb
             doc_id, doc_rev = db.save(new_store)
         except:
             print("error")
