@@ -109,7 +109,7 @@ def general_map():
     # Return the results as JSON
     return jsonify(results)
 
-# sudo cancer data bar get
+# sudo cancer data bar get (scenario 1 cancer sudo data)
 @app.route('/api/sudo_data_cancer')
 def sudo_data_cancer():
 
@@ -139,7 +139,7 @@ def sudo_data_cancer():
         mimetype='application/json'
     )
 
-# cancer map related data get
+# cancer map related data get (scenario 1 Cancer twitter data)
 @app.route('/api/cancer_map')
 def cancer_map():
 
@@ -161,7 +161,39 @@ def cancer_map():
     # Return the results as JSON
     return jsonify(results)
 
-# car accident related data get
+# car accident related data get (scenario2 sudo data)
+# 得到的json数据是八个洲的因车祸死亡的人数, 通过柱状图显示八个洲车祸死亡的信息
+# [{"road_traffic_injuries_death":382,"state":"SA"},
+# {"road_traffic_injuries_death":52,"state":"ACT"},
+# {"road_traffic_injuries_death":1041,"state":"QLD"},
+# {"road_traffic_injuries_death":1129,"state":"NSW"},
+# {"road_traffic_injuries_death":232,"state":"NT"},
+# {"road_traffic_injuries_death":174,"state":"WA"},
+# {"road_traffic_injuries_death":185,"state":"TAS"},
+# {"road_traffic_injuries_death":124,"state":"VIC"}]
+
+@app.route('/api/sudo_car_accident')
+def sudo_data_car_accident():
+    db_sudo_car_accident = get_database('sudo_data')
+    query = {
+        "selector": {
+            "road_traffic_injuries_death": {"$exists": True}
+        }
+    }
+
+    result = []
+    for row in db_sudo_car_accident.find(query):
+        new_dic = {}
+        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"]
+        new_dic["state"] = row["state"]
+        result.append(new_dic)
+
+
+    return jsonify(result)
+
+
+
+# car accident related data get (scenario2 twitter data)
 @app.route('/api/car_accident_map')
 def car_accident_map():
 
@@ -207,6 +239,7 @@ def emotion_count():
 
     # Return the results as JSON
     return jsonify(results)
+
 
 
 if __name__ == '__main__':
