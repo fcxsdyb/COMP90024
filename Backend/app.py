@@ -72,7 +72,6 @@ def root():
 def sudo_data_death_pie():
 
     db_sudo_pie = get_database('sudo_data_death')
-    print("get pie")
 
     # Mango Queries
     query = {
