@@ -51,7 +51,7 @@ def get_database(database):
             continue
 
 
-# This function is used to get the couchdb view(Mapreduce) of remote hosts
+# This function is used to get the couchdb view(MapReduce) of remote hosts
 # if the remote host shut down, then it will find another host to get the same couchdb view(MapReduce)
 def get_view(database, path_view, level):
     for host in hosts:
