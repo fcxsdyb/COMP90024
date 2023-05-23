@@ -1,7 +1,14 @@
 # COMP90024 GROUP48 Assignment2
-This document describes the main components of the project and their roles. The project has three main directories, each containing different parts of the application. 
+This repository contains the source code for assignment 2 of the COMP90024 Cluster and Cloud Computing course at the University of Melbourne.
 
-## Directory Structure
+### Team Members:
+- Yuhang Zhou (Student ID: 1243037)
+- Jitao Feng (Student ID: 1265994)
+- Hui Liu (Student ID: 1336645)
+- Jihang Yu (Student ID: 1341312)
+- Xinran Ren (Student ID: 1309373)
+
+## Project Structure
 The main directories include:
 - `./Backend`: Contains the backend code of the application.
 - `./Frontend`: Contains the frontend code of the application.
