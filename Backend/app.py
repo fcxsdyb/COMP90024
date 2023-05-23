@@ -173,56 +173,7 @@ def cancer_map():
     return jsonify(results)
 
 
-# scenario2 car accident related data get
-# sudo data
-@app.route('/api/sudo_car_accident')
-def sudo_data_car_accident():
-    # get database
-    db_sudo_car_accident = get_database('sudo_data')
-
-    # Mango query
-    query = {
-        "selector": {
-            "road_traffic_injuries_death": {"$exists": True}
-        }
-    }
-
-    result = []
-
-    # calculate road traffic death ratio in different states
-    for row in db_sudo_car_accident.find(query):
-        new_dic = {}
-        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"] / \
-                                                 whole_people_state[row["state"]]
-        new_dic["state"] = state_short_to_long[row["state"]]
-        result.append(new_dic)
-
-    # Return the results as JSON
-    return jsonify(result)
-
-
-# scenario2 car accident related data get
-# Twitter data
-@app.route('/api/car_accident_map')
-def car_accident_map():
-    # View Check
-    view = get_view('huge_twitter_update_emotion_state',
-                    'carAccidentCount/carAccidentCount', 1)
-
-    # get number of tweets per state mentioning car accidents
-    results = []
-    for row in view:
-        new_row = {
-            "name": row["key"],
-            "value": row["value"]
-        }
-        results.append(new_row)
-
-    # Return the results as JSON
-    return jsonify(results)
-
-
-# scenario 3 suicide
+# scenario 2 suicide
 # sudo data
 @app.route('/api/sudo_suicide')
 def sudo_data_suicide():
@@ -246,7 +197,7 @@ def sudo_data_suicide():
     return jsonify(result)
 
 
-# scenario 3 suicide
+# scenario 2 suicide
 # Twitter data
 # emotion related data get (negative emotion rate in different state)
 @app.route('/api/emotion_count')
@@ -276,6 +227,63 @@ def emotion_count():
     # Return the results as JSON
     return jsonify(results)
 
+
+# scenario 3 car accident related data get
+# sudo data
+@app.route('/api/sudo_car_accident')
+def sudo_data_car_accident():
+    # get database
+    db_sudo_car_accident = get_database('sudo_data')
+
+    # Mango query
+    query = {
+        "selector": {
+            "road_traffic_injuries_death": {"$exists": True}
+        }
+    }
+
+    result = []
+
+    # calculate road traffic death ratio in different states
+    for row in db_sudo_car_accident.find(query):
+        new_dic = {}
+        new_dic["road_traffic_injuries_death"] = row["road_traffic_injuries_death"] / \
+                                                 whole_people_state[row["state"]]
+        new_dic["state"] = state_short_to_long[row["state"]]
+        result.append(new_dic)
+
+    # Return the results as JSON
+    return jsonify(result)
+
+
+# scenario 3 car accident related data get
+# Twitter data
+@app.route('/api/car_accident_map')
+def car_accident_map():
+    # View Check
+    view = get_view('huge_twitter_update_emotion_state',
+                    'carAccidentCount/carAccidentCount', 1)
+
+    # get the view which contains numbers of tweets(negative, positive and neutral) in different state
+    view2 = get_view('huge_twitter_update_emotion_state',
+                     'emotionCount/count_state_emotion', 1)
+
+    # get the view data of view2 and make them into an dictionary
+    dict_state_whole = {}
+    for row in view2:
+        dict_state_whole[row["key"]] = row["value"]
+
+    # get number of tweets per state mentioning car accidents
+    results = []
+    for row in view:
+        new_row = {
+            "name": row["key"],
+            "value": row["value"] / dict_state_whole[row["key"]]
+        }
+        results.append(new_row)
+
+    # Return the results as JSON
+    return jsonify(results)
 
 # scenario 4 health care
 # sudo data
