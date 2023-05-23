@@ -1,1 +1,24 @@
 # COMP90024 GROUP48 Assignment2
+This document describes the main components of the project and their roles. The project has three main directories, each containing different parts of the application. 
+
+## Directory Structure
+The main directories include:
+- `./Backend`: Contains the backend code of the application.
+- `./Frontend`: Contains the frontend code of the application.
+- `./Harvester`: Contains Ansible scripts for automatically creating harvesters for Mastodon servers.
+
+### Backend `./Backend`
+
+This directory includes all the backend code that drives the logic and core operations of our application. This includes database interactions, business logic, and server-side calculations.
+
+### Frontend `./Frontend`
+
+This directory houses all the frontend code for our application, which includes the user interface and client-side scripting. It makes use of modern web technologies to provide a seamless user experience.
+
+### Harvester `./Harvester`
+
+The Harvester directory contains Ansible scripts that are used for creating harvesters for Mastodon servers. These harvesters are utilized to gather and process data from these servers.
+
+---
+
+For more detailed information, you should refer to the README files present in each directory.
