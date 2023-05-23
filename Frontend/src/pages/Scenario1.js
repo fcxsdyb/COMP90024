@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
@@ -8,15 +9,18 @@ import MainPic from '../components/MainPic';
 import CancerPic from '../assets/cancer.jpeg'
 import Footer from '../components/Footer';
 
+// Destructuring Content from Layout
 const { Content } = Layout;
 
+// Functional component definition
 const Scenario1 = () => {
 
+    // Using useState for handling component state
     const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Use useRef to prevent unnecessary re-renders of barFinal.
+    // Using useRef to hold constant data structure for bar chart
     const barFinalRef = useRef([
         { name: 'Breast Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] },
         { name: 'Colorectal Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] },
@@ -24,6 +28,7 @@ const Scenario1 = () => {
         { name: 'Other Cancer Death', type: 'bar', stack: 'total', label: { show: false }, emphasis: { focus: 'series' }, data: [] }
     ]);
 
+    // Fetch data from APIs when component mounts
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -44,6 +49,7 @@ const Scenario1 = () => {
         fetchData();
     }, []);
 
+    // Populate barFinalRef with data from barData when it changes
     useEffect(() => {
         barData.forEach(item => {
             barFinalRef.current[0].data.push(item.breast_cancer);
@@ -53,15 +59,18 @@ const Scenario1 = () => {
         });
     }, [barData]);
 
+    // Handle navigation back to home page
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');
     };
 
+    // Ref to bar chart
     let chartRef = useRef(null);
 
+    // Initialize and update bar chart when chartRef or barData changes
     useEffect(() => {
-        if (chartRef.current && barData.length > 0) { // Ensure chartRef and barData are available before initializing the chart.
+        if (chartRef.current && barData.length > 0) {
             const myChart = echarts.init(chartRef.current);
 
             const option = {
@@ -74,11 +83,11 @@ const Scenario1 = () => {
             };
             myChart.setOption(option);
 
-            // Cleanup function to remove event listener on component unmount.
             return () => window.removeEventListener('resize', myChart.resize);
         }
     }, [chartRef, barData]);
 
+    // Component rendering
     return (
         <>
             <Navbar />
@@ -119,4 +128,5 @@ const Scenario1 = () => {
     );
 };
 
+// Exporting the Scenario1 component
 export default Scenario1;

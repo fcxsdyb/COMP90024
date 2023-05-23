@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
@@ -8,18 +9,23 @@ import MainPic from '../components/MainPic';
 import CarAccidentPic from '../assets/caraccident.avif'
 import Footer from '../components/Footer';
 
+// Destructuring Content from Layout
 const { Content } = Layout;
 
+// Functional component definition
 const Scenario3 = () => {
 
+    // Using useState for handling component state
     const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Fetch data from APIs when component mounts
     useEffect(() => {
         fetchData();
     }, []);
 
+    // Function to fetch data from APIs
     const fetchData = async () => {
         try {
             const responseBar = await fetch('http://172.26.132.174:8080/api/sudo_car_accident');
@@ -36,11 +42,13 @@ const Scenario3 = () => {
         }
     };
 
+    // Function to handle navigation back to home page
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');
     };
 
+    // Component rendering
     return (
         <>
             <Navbar />
@@ -78,4 +86,5 @@ const Scenario3 = () => {
     );
 };
 
+// Exporting the Scenario3 component
 export default Scenario3;

@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
 
+// LineChart component that renders a line chart using the echarts-for-react library
 const LineChart = ({ lineData }) => {
+    // Function to get the chart options
     const getOption = () => ({
         tooltip: {
             trigger: 'axis'

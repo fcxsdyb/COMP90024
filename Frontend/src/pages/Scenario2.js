@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
@@ -9,19 +10,24 @@ import MainPic from '../components/MainPic';
 import SuicidePic from '../assets/suicide.jpeg'
 import Footer from '../components/Footer';
 
+// Destructuring Content from Layout
 const { Content } = Layout;
 
+// Functional component definition
 const Scenario2 = () => {
 
+    // Using useState for handling component state
     const [barData, setBarData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [pieData, setPieData] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Fetch data from APIs when component mounts
     useEffect(() => {
         fetchData();
     }, []);
 
+    // Function to fetch data from APIs
     const fetchData = async () => {
         try {
             const responseBar = await fetch('http://172.26.132.174:8080/api/sudo_suicide');
@@ -34,6 +40,7 @@ const Scenario2 = () => {
 
             const responsePie = await fetch('http://172.26.132.174:8080/api/mastodon_suicide');
             const jsonPieData = await responsePie.json();
+            // Reformat pie data into a form suitable for charting
             const pieDataFormat = jsonPieData.map(item => {
                 const name = Object.keys(item)[0]; // Get the key
                 const value = item[name]; // Get the value using the key
@@ -47,11 +54,13 @@ const Scenario2 = () => {
         }
     };
 
+    // Function to handle navigation back to home page
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');
     };
 
+    // Component rendering
     return (
         <>
             <Navbar />
@@ -92,4 +101,5 @@ const Scenario2 = () => {
     );
 };
 
+// Exporting the Scenario2 component
 export default Scenario2;

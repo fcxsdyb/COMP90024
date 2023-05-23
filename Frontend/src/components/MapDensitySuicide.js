@@ -6,16 +6,20 @@ import { TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent 
 import { SVGRenderer } from 'echarts/renderers';
 import ausGeoJson from './aus_states/aus_state.json';
 
+// Register necessary Echarts components
 echarts.use(
     [TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent, MapChart, SVGRenderer]
 );
 
+// MapDensitySuicide component that renders a density map for suicide-related tweets using Echarts
 function MapDensitySuicide({ mapData }) {
     const [option, setOption] = useState(null);
 
     useEffect(() => {
+        // Register the map data for Australia
         echarts.registerMap('AUS', ausGeoJson);
 
+        // Set the chart options
         setOption({
             title: {
                 text: 'Suicide-related tweets expressing negative sentiment in different Australian states (2022)',

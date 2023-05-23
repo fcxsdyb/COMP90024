@@ -6,16 +6,20 @@ import { TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent 
 import { SVGRenderer } from 'echarts/renderers';
 import ausGeoJson from './aus_states/aus_state.json';
 
+// Register necessary Echarts components
 echarts.use(
     [TooltipComponent, ToolboxComponent, TitleComponent, VisualMapComponent, MapChart, SVGRenderer]
 );
 
+// MapDensityCancer component that renders a density map using Echarts
 function MapDensityCancer({ mapData }) {
     const [option, setOption] = useState(null);
 
     useEffect(() => {
+        // Register the map data for Australia
         echarts.registerMap('AUS', ausGeoJson);
 
+        // Set the chart options
         setOption({
             title: {
                 text: 'Cancer Concern by State in Australia (2022)',

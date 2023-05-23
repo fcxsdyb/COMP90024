@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout, Button } from 'antd';
@@ -9,24 +10,30 @@ import MainPic from '../components/MainPic';
 import HospitalPic from '../assets/hospital.avif'
 import Footer from '../components/Footer';
 
+// Destructuring Content from Layout
 const { Content } = Layout;
 
+// Functional component definition
 const Scenario4 = () => {
 
+    // Using useState for handling component state
     const [lineData, setLineData] = useState([]);
     const [mapData, setMapData] = useState([]);
     const [pieData, setPieData] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Fetch data from APIs when component mounts
     useEffect(() => {
         fetchData();
     }, []);
 
+    // Function to fetch data from APIs
     const fetchData = async () => {
         try {
             const response = await fetch('http://172.26.132.174:8080/api/sudo_health_evaluation');
             const jsonData = await response.json();
 
+            // Transform data to correct format for the line chart
             const data = jsonData.map(item => ({
                 name: item.state,
                 type: 'line',
@@ -41,6 +48,8 @@ const Scenario4 = () => {
 
             const responsePie = await fetch('http://172.26.132.174:8080/api/mastodon_health_care');
             const jsonPieData = await responsePie.json();
+
+            // Transform data to correct format for the pie chart
             const pieDataFormat = jsonPieData.map(item => {
                 const name = Object.keys(item)[0]; // Get the key
                 const value = item[name]; // Get the value using the key
@@ -54,13 +63,16 @@ const Scenario4 = () => {
         }
     };
 
+    // Function to handle navigation back to home page
     const navigate = useNavigate();
     const handleGoBack = () => {
         navigate('/');
     };
 
+    // Log the line data to the console
     console.log(lineData)
 
+    // Component rendering
     return (
         <>
             <Navbar />
@@ -101,4 +113,5 @@ const Scenario4 = () => {
     );
 };
 
+// Exporting the Scenario4 component
 export default Scenario4;

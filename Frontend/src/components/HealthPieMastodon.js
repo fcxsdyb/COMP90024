@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
+// HealthPieMastodon component that renders a pie chart using Echarts
 const HealthPieMastodon = ({ data }) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
+        // Initialize the Echarts chart instance
         var myChart = echarts.init(chartRef.current);
 
+        // Set the chart options
         var option = {
             tooltip: {
                 trigger: 'item'
@@ -40,6 +43,7 @@ const HealthPieMastodon = ({ data }) => {
             ]
         };
 
+        // Set the chart options
         option && myChart.setOption(option);
     }, [data]);
 

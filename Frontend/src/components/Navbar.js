@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faGear, faHeartPulse, faFaceFrown, faCarCrash, faHospital } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 
+
+// Using FontAwesomeIcon for each page in the navigate bar
 class Navbar extends Component {
     render() {
         return (

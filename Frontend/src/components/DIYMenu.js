@@ -3,16 +3,21 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 import { AppstoreOutlined, LinkOutlined, SettingOutlined, MailOutlined } from '@ant-design/icons';
 
-const DIYMenu = () => {    
+// DIYMenu component that renders a customized menu using the Ant Design library
+const DIYMenu = () => {
+    // Access the navigate and location functions from the react-router-dom library
     const navigate = useNavigate();
     const location = useLocation();
-    
+
+    // Function to navigate to the selected menu item
     const navigateTo = (key) => {
         navigate(`/${key}`);
     }
 
+    // Event handler for menu item selection
     const handleMenuSelect = ({ key }) => navigateTo(key);
 
+    // Get the current key by extracting it from the location pathname
     const currentKey = location.pathname.split("/")[1];
 
     return (

@@ -1,5 +1,6 @@
 import "./MainPic.css"
 
+// MainPic component that renders a main picture with accompanying text
 function MainPic(props) {
     return (
         <>
@@ -15,4 +16,4 @@ function MainPic(props) {
     );
 }
 
-export default MainPic; 
+export default MainPic;
