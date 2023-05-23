@@ -34,8 +34,8 @@ function MapDensityCarAccident({ mapData }) {
             },
             visualMap: {
                 left: 'right',
-                min: 1,
-                max: 30,
+                min: 0.00002,
+                max: 0.00006,
                 inRange: {
                     color: [
                         '#313695',
