@@ -362,6 +362,8 @@ def mastodon_suicide_data():
     view2 = get_view("mastodon_au_final_with_emotion",
                      'suicide_mastodon/suicide_emotion', 1)
 
+    view3 = get_view("mastodon_au",'suicide_mastodon/suicide_emotion', 1)
+
     results = []
 
     # count dictionary
@@ -377,6 +379,9 @@ def mastodon_suicide_data():
         mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for row in view2:
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
+
+    for row in view3:
         mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for key, value in mastodon_data_whole.items():
@@ -403,6 +408,8 @@ def mastodon_health_care_data():
     view2 = get_view("mastodon_au_final_with_emotion",
                      'Healthcare/Healthcare_emotion', 1)
 
+    view3 = get_view("mastodon_au", 'suicide_mastodon/suicide_emotion', 1)
+
     # count dictionary
     results = []
 
@@ -418,6 +425,9 @@ def mastodon_health_care_data():
         mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for row in view2:
+        mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
+
+    for row in view3:
         mastodon_data_whole[row['key']] = mastodon_data_whole[row['key']] + row["value"]
 
     for key, value in mastodon_data_whole.items():
