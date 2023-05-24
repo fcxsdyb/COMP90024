@@ -23,11 +23,11 @@ admin = 'cccadmin'
 password = 'whysohard24!'
 
 # connect to couchdb
-url = f'http://{admin}:{password}172.26.133.217:5984/'
+url = f'http://{admin}:{password}@172.26.132.240:5984/'
 couch = couchdb.Server(url)
 
 # create a couchdb database called 'mastodon_au_final_with emotion'.
-db_name = 'mastodon_au_final_with_emotion'
+db_name = 'mastodon_au'
 
 # if the database exists,just find that database.
 # If not, just creat the database.
