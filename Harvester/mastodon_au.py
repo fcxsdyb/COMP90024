@@ -5,13 +5,25 @@ import json
 from mastodon import Mastodon, StreamListener
 import re
 from textblob import TextBlob
+import argparse
 
+# Create the parser
+parser = argparse.ArgumentParser(description="This is our script")
+
+# Add arguments
+parser.add_argument('--token', type=str, required=True, help='Your token')
+parser.add_argument('--url', type=str, required=True, help='Your url')
+
+args = parser.parse_args()
+
+print(args.url)
+print(args.token)
 # couchdb login data
 admin = 'cccadmin'
 password = 'whysohard24!'
 
 # connect to couchdb
-url = f'http://{admin}:{password}@172.26.135.17:5984/'
+url = f'http://{admin}:{password}172.26.133.217:5984/'
 couch = couchdb.Server(url)
 
 # create a couchdb database called 'mastodon_au_final_with emotion'.
@@ -26,8 +38,8 @@ else:
 
 # mastodon message (with url and private token)
 m = Mastodon(
-    api_base_url='https://mastodon.au/',
-    access_token='AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs'
+    api_base_url= args.url,
+    access_token= args.token
 )
 
 
