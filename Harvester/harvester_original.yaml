@@ -1,0 +1,47 @@
+---
+- name: Install and configure Python, Mastodon, and CouchDB and start harvester on VM
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - git
+          - docker.io
+          - python3
+          - python3-pip
+          - nodejs
+        state: latest
+        update_cache: yes
+
+    - name: Clone git repository
+      git:
+        repo: 'https://github.com/fcxsdyb/COMP90024.git'
+        dest: '/home/ubuntu/Assignment2'
+
+    - name: Install required Python packages
+      pip:
+        name:
+          - mastodon.py
+          - couchdb
+        state: latest
+        executable: pip3
+      args:
+        chdir: '/home/ubuntu/Assignment2/Harvester'
+
+    - name: run mastodon_au harvester
+      ansible.builtin.command:
+        cmd: "nohup python3 mastodon_au_test.py --token AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs --url https://mastodon.au/ &"
+      async: 36000000
+      poll: 0
+      args:
+        chdir: '/home/ubuntu/Assignment2/Harvester'
+
+    - name: run mastodon_au harvester
+      ansible.builtin.command:
+        cmd: "nohup python3 mastodon_au_test.py --token 2nwIHJnHrDkZkFnzbFEgDZmsYTTgu8aXnutLRRgermg --url https://aus.social/ &"
+      async: 36000000
+      poll: 0
+      args:
+        chdir: '/home/ubuntu/Assignment2/Harvester'
