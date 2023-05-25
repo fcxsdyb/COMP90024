@@ -1,5 +1,5 @@
 ---
-- name: Install and configure Python, Mastodon and start harvester on VM
+- name: Install and configure CouchDB, Python, Mastodon and start harvester on VM
   hosts: localhost
   become: yes
   vars:
@@ -64,7 +64,7 @@
         state: latest
         executable: pip3
       args:
-        chdir: '/home/ubuntu/Assignment2/Harvester'
+        chdir: '/home/ubuntu/Assignment2/Harvester/harvester_ansible'
 
     - name: run mastodon_au harvester
       ansible.builtin.command:
@@ -72,7 +72,7 @@
       async: 3600000
       poll: 0
       args:
-        chdir: '/home/ubuntu/Assignment2/Harvester'
+        chdir: '/home/ubuntu/Assignment2/Harvester/harvester_ansible'
 
     - name: run mastodon_au harvester
       ansible.builtin.command:
@@ -80,4 +80,4 @@
       async: 3600000
       poll: 0
       args:
-        chdir: '/home/ubuntu/Assignment2/Harvester'
+        chdir: '/home/ubuntu/Assignment2/Harvester/harvester_ansible'

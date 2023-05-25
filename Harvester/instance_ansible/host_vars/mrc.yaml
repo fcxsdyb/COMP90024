@@ -1,0 +1,55 @@
+# Common vars
+availability_zone: melbourne-qh2-uom
+instance_image: bbaf16f8-2484-48d7-b455-42209cc4b8d2
+instance_key_name: Group_Key
+instance_flavor: uom.mse.1c4g
+instance_network: qh2-uom-internal
+
+# Security group
+security_groups:
+  - name: ssh
+    description: "security group for SSH access(22)"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+  - name: http
+    description: "security group for HTTP and HTTPS"
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+  - name: CouchDB
+    description: "security group for CouchDB(5984)"
+    protocol: tcp
+    port_range_min: 5984
+    port_range_max: 5984
+    remote_ip_prefix: 0.0.0.0/0
+  - name: Docker_env
+    description: "security group for Docker(8080)"
+    protocol: tcp
+    port_range_min: 8080
+    port_range_max: 8080
+    remote_ip_prefix: 0.0.0.0/0
+  - name: couchdb_cluster
+    description: "security group for couchdb_cluster(4369)"
+    protocol: tcp
+    port_range_min: 4369
+    port_range_max: 4369
+    remote_ip_prefix: 0.0.0.0/0
+  - name: rdp
+    description: "security group for rdp(3389)"
+    protocol: tcp
+    port_range_min: 3389
+    port_range_max: 3389
+    remote_ip_prefix: 0.0.0.0/0
+  - name: frontend
+    description: "security group for frontend(3000)"
+    protocol: tcp
+    port_range_min: 3000
+    port_range_max: 3000
+    remote_ip_prefix: 0.0.0.0/0
+
+# Instance
+instances:
+  - name: Mastodon_Harvester_Ansible
