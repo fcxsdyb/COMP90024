@@ -1,44 +1,9 @@
 ---
-- name: Install and configure CouchDB, Python, Mastodon and start harvester on VM
+- name: Install Python, Mastodon and start harvester on VM
   hosts: localhost
   become: yes
-  vars:
-    couchdb_admin_username: Bob
-    couchdb_admin_password: CCCansible48
 
-  tasks:
-    - name: install couchdb
-      ansible.builtin.command:
-        cmd: "sudo snap install couchdb"
-
-    - name: start couchdb
-      ansible.builtin.command:
-        cmd: "sudo snap start couchdb"
-    
-    - name: Insert port under [chttpd]
-      ansible.builtin.lineinfile:
-        path: /var/snap/couchdb/current/etc/local.ini
-        insertafter: '^\[chttpd\]'
-        line: 'port = 5984'
-      become: yes
-      become_user: root
-
-    - name: Insert bind_address under [chttpd]
-      ansible.builtin.lineinfile:
-        path: /var/snap/couchdb/current/etc/local.ini
-        insertafter: 'port = 5984'
-        line: 'bind_address = 0.0.0.0'
-      become: yes
-      become_user: root
-
-    - name: Insert admin user under [admins]
-      ansible.builtin.lineinfile:
-        path: /var/snap/couchdb/current/etc/local.ini
-        insertafter: '^\[admins\]'
-        line: "{{ couchdb_admin_username }} = {{ couchdb_admin_password }}"
-      become: yes
-      become_user: root
-  
+  tasks:  
     - name: Install required packages
       apt:
         name:
@@ -68,7 +33,7 @@
 
     - name: run mastodon_au harvester
       ansible.builtin.command:
-        cmd: "python3 mastodon_au_test.py --token AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs --url https://mastodon.au/"
+        cmd: "python3 mastodon_au.py --token AfJXxavoZkTBBqqPK23U8jFTOb2j7bqar6EgCGMH3bs --url https://mastodon.au/"
       async: 3600000
       poll: 0
       args:
@@ -76,7 +41,7 @@
 
     - name: run mastodon_au harvester
       ansible.builtin.command:
-        cmd: "python3 mastodon_au_test.py --token 2nwIHJnHrDkZkFnzbFEgDZmsYTTgu8aXnutLRRgermg --url https://aus.social/"
+        cmd: "python3 mastodon_au.py --token 2nwIHJnHrDkZkFnzbFEgDZmsYTTgu8aXnutLRRgermg --url https://aus.social/"
       async: 3600000
       poll: 0
       args:
