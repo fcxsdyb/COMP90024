@@ -1,3 +1,7 @@
+ssh -i Group_Key.pem ubuntu@xxx.xxx.xxx.xx
+
+scp -i Group_Key.pem harvester_original.yaml ubuntu@xxx.xxx.xxx.xx:~
+
 sudo apt-get update
 sudo apt-get install software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
