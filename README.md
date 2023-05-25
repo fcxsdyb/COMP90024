@@ -19,15 +19,15 @@ The main directories include:
 
 ### Backend
 
-This directory includes all the backend code that drives the logic and core operations of our application. This includes database interactions, business logic, and server-side calculations.
+This directory includes all the backend code that drives the logic and core operations of our application. This includes database interactions, business logic, and server-side calculations. Using Docker to deploy backend image.
 
 ### Frontend
 
-This directory houses all the frontend code for our application, which includes the user interface and client-side scripting. It makes use of modern web technologies to provide a seamless user experience.
+This directory houses all the frontend code for our application, which includes the user interface and client-side scripting. It makes use of modern web technologies to provide a seamless user experience. Using Docker to deploy frontend image.
 
 ### Harvester
 
-The Harvester directory contains Ansible scripts that are used for creating harvesters for Mastodon servers. These harvesters are utilized to gather and process data from these servers.
+The Harvester directory contains Ansible scripts that are used for creating instances and harvesters for Mastodon servers. These harvesters are utilized to gather and process data from these servers.
 
 ### DataProcessor
 
