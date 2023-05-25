@@ -25,6 +25,8 @@
         name:
           - mastodon.py
           - couchdb
+          - textblob
+          - argparse
         state: latest
         executable: pip3
       args:
