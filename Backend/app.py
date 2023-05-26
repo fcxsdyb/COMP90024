@@ -1,3 +1,10 @@
+# COMP90024 GROUP48
+# Yuhang Zhou     ID:1243037
+# Jitao Feng      ID:1265994
+# Hui Liu         ID:1336645
+# Jihang Yu       ID:1341312
+# Xinran Ren      ID:1309373
+
 from flask import Flask, render_template, jsonify
 from flask_cors import CORS
 import couchdb
