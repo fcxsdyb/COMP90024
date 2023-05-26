@@ -1,7 +1,7 @@
 # COMP90024 GROUP48 Assignment2
 This repository contains the source code for assignment 2 of the COMP90024 Cluster and Cloud Computing course at the University of Melbourne.
 
-### [Scenario Introduction](https://www.youtube.com/watch?v=muDC8zlvPZc)
+### [Scenario Introduction](https://www.youtube.com/watch?v=7E1voOXxBNA)
 ### [Ansible Usage](https://youtu.be/9gILq-gpIdc)
 
 ### Team Members:
