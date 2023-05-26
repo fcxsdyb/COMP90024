@@ -1,3 +1,10 @@
+//  COMP90024 GROUP48
+//  Yuhang Zhou     ID:1243037
+//  Jitao Feng      ID:1265994
+//  Hui Liu         ID:1336645
+//  Jihang Yu       ID:1341312
+//  Xinran Ren      ID:1309373
+
 import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faGear, faHeartPulse, faFaceFrown, faCarCrash, faHospital } from "@fortawesome/free-solid-svg-icons";

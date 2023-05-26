@@ -1,3 +1,10 @@
+# COMP90024 GROUP48
+# Yuhang Zhou     ID:1243037
+# Jitao Feng      ID:1265994
+# Hui Liu         ID:1336645
+# Jihang Yu       ID:1341312
+# Xinran Ren      ID:1309373
+
 # Use an official Node.js runtime as a parent image
 FROM node:14
 
