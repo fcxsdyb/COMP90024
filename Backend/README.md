@@ -2,10 +2,11 @@
 
 Using any IDE you preferred and install some python related libraries or dependencies.
 
-### pip
-### Flask
-### Mastodon
-### couchdb
-### CORS
+## Install before start
+pip
+Flask
+Mastodon
+couchdb
+CORS
 
 ---
